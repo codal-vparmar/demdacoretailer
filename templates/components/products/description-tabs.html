@@ -1,0 +1,108 @@
+<div id="tab-artist-link"></div>
+<ul class="tabs" data-tab>    
+    {{#if product.warranty}}
+        <li class="tab is-active warrenty">
+            <a class="tab-title" href="#tab-warranty">{{lang 'products.tab_description'}}</a>
+        </li>
+    {{/if}}
+	{{#each product.custom_fields}}
+    	{{#if name '===' 'Artist Name'}}
+        <li class="tab artist" id="artist">
+            <a class="tab-title" href="#tab-artist">The Artist</a>
+        </li>
+    {{/if}}	
+		 {{/each}}
+	
+    {{#all product.custom_fields theme_settings.show_custom_fields_tabs}}
+        <li class="tab">
+            <a class="tab-title" href="#tab-{{dashcase (lowercase (sanitize theme_settings.pdp-custom-fields-tab-label))}}">{{sanitize theme_settings.pdp-custom-fields-tab-label}}</a>
+        </li>
+    {{/all}}
+    {{#all settings.show_product_reviews theme_settings.show_product_reviews_tabs product.reviews.total}}
+        <li class="tab">
+            <a class="tab-title productView-reviewTabLink" href="#tab-reviews">{{lang 'products.reviews.header' total=product.reviews.total}}</a>
+        </li>
+    {{/all}}
+</ul>
+<div class="tabs-contents custom_toggle">
+
+    {{#if product.warranty}}
+                <a class="tab-title toggle_btn is-open" href="#tab-description">The Details
+                    <span style="display: none;" class="arrow-down">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+                    </span>
+                    <span style="display: none;" class="arrow-up">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+                    </span>
+                </a>               
+           {{/if}}
+   {{#if product.warranty}}
+       <div class="tab-content is-active" id="tab-warranty">
+           {{{product.warranty}}}
+       </div>
+   {{/if}}   
+   {{#each product.custom_fields}}
+      {{#if name '===' 'Artist Name'}}
+            <a class="tab-title toggle_btn" href="#tab-artist" aria-expanded="true">The Artist
+                <span style="display: none;" class="arrow-down">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+                    </span>
+                    <span style="display: none;" class="arrow-up">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+                    </span>
+            </a>
+        {{/if}}
+    {{/each}}
+        <div class="tab-content toggle_content" id="tab-artist">
+            {{#each product.custom_fields}}
+                {{#if name '===' 'Artist Image'}}
+                    <div class="artistImage">
+                        <img src="{{{value}}}"/> 
+                    </div>
+                {{/if}}
+            {{/each}}
+            <div class="artistname">
+             {{#each product.custom_fields}}
+            {{#if name '===' 'Artist Name'}}
+                    <h3>{{{value}}}</h3>
+                {{/if}}
+            {{/each}}
+            </div>
+        <div class="artistBio">
+            {{#each product.custom_fields}}
+                {{#if name '===' 'Artist Bio'}}
+                    <p>{{{value}}}</p>
+                {{/if}}
+                {{#if name '===' 'Artist Bio 1'}}
+                    <p>{{{value}}}</p>
+                {{/if}}
+                {{#if name '===' 'Artist Bio 2'}}
+                    <p>{{{value}}}</p>
+                {{/if}}
+                {{#if name '===' 'Artist Bio 3'}}
+                    <p>{{{value}}}</p>
+                {{/if}}
+            {{/each}}
+        </div>
+        </div>
+   {{#all product.custom_fields theme_settings.show_custom_fields_tabs}}
+      <div class="tab-content" id="tab-{{dashcase (lowercase (sanitize theme_settings.pdp-custom-fields-tab-label))}}">
+         <dl class="productView-info">
+            {{#each product.custom_fields}}
+               <dt class="productView-info-name">{{name}}:</dt>
+               <dd class="productView-info-value">{{{value}}}</dd>
+            {{/each}}
+         </dl>
+      </div>
+   {{/all}}
+   {{#all settings.show_product_reviews theme_settings.show_product_reviews_tabs}}
+       <div class="tab-content" id="tab-reviews">
+           {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
+       </div>
+   {{/all}}
+</div>
+<script>
+$(document).ready(function() {
+    $('.artistBio p').contents().unwrap().wrapAll('<p>');
+});
+</script>

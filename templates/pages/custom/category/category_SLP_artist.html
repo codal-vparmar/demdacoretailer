@@ -1,0 +1,126 @@
+---
+category:
+    shop_by_price: true
+    products:
+        limit: {{theme_settings.categorypage_products_per_page}}
+---
+{{inject "categoryProductsPerPage" theme_settings.categorypage_products_per_page}}
+{{#partial "head"}}
+    {{#if pagination.category.previous}}
+        <link rel="prev" href="{{pagination.category.previous}}">
+    {{/if}}
+    {{#if pagination.category.next}}
+        <link rel="next" href="{{pagination.category.next}}">
+    {{/if}}
+{{/partial}}
+
+{{#partial "page"}}
+
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+<div class="category-desc">
+{{{category.description}}}
+</div>
+
+<div class="ArtistPage">
+	<aside class="LeftBar" id="faceted-search-container">
+		{{#if category.subcategories}}
+			<div class="sidebarBlock">
+				<h2 class="sidebarBlock-heading">Shop by {{category.name}}</h2>
+				<ul class="LeftCategories">
+					{{#each category.subcategories}}
+					<li class="navList-item">
+						<a class="navList-action" href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a>
+					</li>
+					{{/each}}
+				</ul>     
+			</div>
+		{{else}}
+			{{#if category.faceted_search_enabled}}
+				<aside class="page-sidebar 123" id="faceted-search-container">
+					{{> components/category/sidebar}}
+				</aside>
+			{{else if category.subcategories}}
+				<aside class="page-sidebar" id="faceted-search-container">
+					{{> components/category/sidebar}}
+				</aside>
+			{{else if category.shop_by_price}}
+				{{#if theme_settings.shop_by_price_visibility}}
+					 <aside class="page-sidebar" id="faceted-search-container">
+						{{> components/category/sidebar}}
+					</aside>
+				{{/if}}
+			{{/if}}	
+		{{/if}}
+    </aside>
+	<main class="PageContent" id="product-listing-container">
+	    
+    {{#if banners.top}}
+    <div class="ArtistMn SlpArtist">
+    	<div class="banners" data-banner-location="top">
+    		{{#each (limit banners.top_metadata 1)}}
+    		<div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-banner-id="{{this.banner-name}}">
+    			<div data-event-type="promotion-click">
+    				{{{this.content}}}
+    			</div>
+    		</div>
+    		{{/each}}
+    	</div>
+    </div>
+    {{/if}}
+	    
+		{{#if category.subcategories}}
+			<ul class="ArtistDetail">
+				{{#each category.subcategories}}
+				<li class="navList-item">
+					{{#if image}}
+						<div class="ArtistImg">
+						    <a href="{{url}}">
+							{{> components/common/responsive-img
+								image=image
+								fallback_size=theme_settings.zoom_size
+								lazyload=theme_settings.lazyload_mode
+							}}
+							</a>
+						</div>
+					{{/if}} 
+					<a class="navList-action" href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a>
+				</li>
+				{{/each}}
+			</ul>
+		{{/if}}
+	</main>
+	
+	{{#if banners.bottom}}
+	<div class="category-banner-bottom">
+    {{#if settings.data_tag_enabled}}
+        <div class="banners" data-banner-location="bottom">
+            {{#each (limit banners.bottom_metadata 1)}}
+                <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-name="{{this.banner-name}}">
+                    <div data-event-type="promotion-click">
+                        {{{this.content}}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    {{else}}
+        <div class="banners" data-banner-location="bottom">
+            <div class="banner">
+                {{{limit banners.bottom 1}}}
+            </div>
+        </div>
+    {{/if}}
+    </div>	
+{{/if}}
+	
+	
+</div>
+
+
+
+{{/partial}}
+
+
+
+
+{{> layout/base}}

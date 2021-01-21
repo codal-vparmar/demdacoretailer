@@ -1,0 +1,97 @@
+{{#partial "head"}}
+
+{{{stylesheet '/assets/css/theme.css'}}}
+{{{ checkout.checkout_head }}}
+{{{ stylesheet '/assets/css/optimized-checkout.css' }}}
+{{ getFontsCollection }}
+
+<script type="text/javascript">
+    window.language = {{{langJson 'optimized_checkout'}}};
+</script>
+
+{{{head.scripts}}}
+
+{{/partial}}
+{{#partial "page"}}
+<img src="https://fp.listrakbi.com/fp/1e7Ei8KWyRGf.jpg" height="1" width="1" />
+{{> components/common/header }}
+<!--
+<header class="checkoutHeader optimizedCheckout-header">
+    <div class="checkoutHeader-content">
+        <h1 class="is-srOnly">{{lang 'checkout.title'}}</h1>
+        <h2 class="checkoutHeader-heading">
+            <a class="checkoutHeader-link" href="{{urls.home}}">
+                {{#if checkout.header_image}}
+                    <img alt="{{settings.store_logo.title}}" class="checkoutHeader-logo" id="logoImage" src="{{ checkout.header_image }}"/>
+                {{ else }}
+                    <span class="header-logo-text">{{settings.store_logo.title}}</span>
+                {{/if}}
+            </a>
+        </h2>
+    </div> 
+</header> 
+-->  
+<div class="oc_page">
+{{{ checkout.order_confirmation_content }}}
+</div>
+
+<div class="oc_page_custom">
+<p class="message-txt">We've received your order and will send an email confirmation soon. You can also view order details in the Account section.</p>
+<div class="sao_btn">
+ <a href="{{urls.home}}" target="_top"><button class="button button--tertiary optimizedCheckout-buttonSecondary" type="button">Start Another Order</button></a>
+</div>
+
+<div class="question-block">
+ <h3>Questions?</h3>
+ <p>
+ <strong>Contact Customer Care</strong><br/>
+ Monday - Friday 8am - 5pm CST<br/>
+ 888.DEMDACO (336.3226)<br/>
+ <a href="mailto:customercare@demdaco.com">customercare@demdaco.com</a>
+ </p>
+</div>
+
+<div class="oc_tm_block"></div>
+
+<div class="insta_block">
+ <h3>Follow us on Instagram</h3>
+ <p>Share Your Story by Tagging Us @DEMDACO</p>
+</div>
+</div>
+
+{{> components/common/footer }}
+
+{{{ footer.scripts }}}
+
+<script src="//code.jquery.com/jquery-2.2.4.js"></script>
+<script type="text/javascript"> 
+ fetch('/api/storefront/order/{{checkout.order.id}}', {credentials: 'include', async: true,})
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(orderjson) {
+             var itemsarray = orderjson.lineItems.physicalItems;
+             
+             (function(){if(typeof _ltk == 'object'){ltkCode();}else{(function (d) { if (document.addEventListener) document.addEventListener('ltkAsyncListener', d); else { e = document.documentElement; e.ltkAsyncProperty = 0; e.attachEvent('onpropertychange', function (e) { if (e.propertyName == 'ltkAsyncProperty') { d(); } }); } })(function(){ltkCode();});}function ltkCode(){_ltk_util.ready(function(){
+                    /********** Begin Custom Code **********/
+                    
+                    _ltk.Order.SetCustomer('{{customer.email}}', orderjson.billingAddress.firstName, orderjson.billingAddress.lastName);
+                    _ltk.Order.OrderNumber = orderjson.orderId;
+                    _ltk.Order.ItemTotal = orderjson.orderAmount;
+                    _ltk.Order.ShippingTotal = orderjson.shippingCostTotal;
+                    _ltk.Order.TaxTotal = orderjson.taxTotal;
+                    _ltk.Order.HandlingTotal = orderjson.handlingCostTotal;
+                    _ltk.Order.OrderTotal = orderjson.orderAmount;
+                    $.each(itemsarray, function( index, item ) {
+                          _ltk.Order.AddItem(item.sku, item.quantity, item.salePrice);
+                    });
+                
+                    _ltk.Order.Submit();
+                     /********** End Custom Code ************/  
+            })}})(); 
+    }); 
+</script>
+
+{{/partial}}
+
+{{> layout/empty}}

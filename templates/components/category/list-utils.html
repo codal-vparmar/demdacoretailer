@@ -1,0 +1,12 @@
+{{!--
+  Product List Utilities - toolbar to refine product lists
+
+  @param listtype       The section this display applies to.
+  @param pagination     The pagination object for this section (for sort / results)
+--}}
+{{#if listtype.products}}
+
+  {{> components/category/list-results-counter listtype=listtype pagination=pagination}}
+
+
+{{/if}}

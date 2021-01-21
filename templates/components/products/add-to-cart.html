@@ -1,0 +1,149 @@
+{{#if theme_settings.show_product_quantity_box}}
+    <div class="form-field form-field--increments">
+        <label class="form-label form-label--alternate"
+               for="qty[]">{{lang 'products.quantity'}}</label>
+            <div class="form-increment" data-quantity-change>
+                <button class="button button--icon" data-action="dec">
+                    <span class="is-srOnly">{{lang 'products.quantity_decrease'}}</span>
+                    <i class="icon" aria-hidden="true">
+                        <svg>
+                            <use xlink:href="#icon-keyboard-arrow-down"/>
+                        </svg>
+                    </i>
+                </button>
+                <input class="form-input form-input--incrementTotal"
+                       id="qty[]"
+                       name="qty[]"
+                       type="tel"
+                       value="{{#if product.min_purchase_quantity}}{{product.min_purchase_quantity}}{{else}}1{{/if}}"
+                       data-quantity-min="{{product.min_purchase_quantity}}"
+                       data-quantity-max="{{product.max_purchase_quantity}}"
+                       min="1"
+                       pattern="[0-9]*"
+                       aria-live="polite">
+                <button class="button button--icon" data-action="inc">
+                    <span class="is-srOnly">{{lang 'products.quantity_increase'}}</span>
+                    <i class="icon" aria-hidden="true">
+                        <svg>
+                            <use xlink:href="#icon-keyboard-arrow-up"/>
+                        </svg>
+                    </i>
+                </button>
+            </div>
+    </div>
+{{/if}}
+
+{{#if product.min_purchase_quantity}}                       
+    <div class="productView-info top_info class_motm">
+        <div class="pro_info min-order-qty-div" data-min-qty="{{product.min_purchase_quantity}}">
+            <div class="productView-info-value">
+                {{lang 'products.min_purchase_quantity'}} {{product.min_purchase_quantity}} 
+                <br />
+                {{lang 'products.increment_of'}} {{#each product.custom_fields}}{{#if name '===' 'Inner Pack Qty'}}{{value}}{{/if}}{{/each}}
+            </div>
+        </div>
+    </div>
+{{/if}}
+
+<div class="alertBox productAttributes-message" style="display:none">
+    <div class="alertBox-column alertBox-icon">
+        <icon glyph="ic-success" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+    </div>
+    <p class="alertBox-column alertBox-message"></p>
+</div>
+
+{{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+    {{#if customer.customer_group_name '===' 'B2C'}}
+        <div class="form-action">
+            <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary" type="submit"
+                value="{{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_cart'}}{{/if}}">
+        </div>
+    {{/if}}
+    {{#or (if customer.customer_group_name '===' 'Dealer A') (if customer.customer_group_name '===' 'Dealer AT')}}
+        {{#each product.custom_fields}}
+        	{{#if name '===' 'Allow Puchase'}}
+        	   {{#contains value "A"}}
+                    <div class="form-action">
+                        <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary" type="submit"
+                            value="{{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_cart'}}{{/if}}">
+                    </div>
+                {{/contains}}
+            {{/if}}
+        {{/each}}
+    {{/or}}
+    {{#or (if customer.customer_group_name '===' 'Dealer B')}}
+        {{#each product.custom_fields}}
+        	{{#if name '===' 'Allow Puchase'}}
+        	   {{#contains value "B"}}
+                    <div class="form-action">
+                        <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary" type="submit"
+                            value="{{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_cart'}}{{/if}}">
+                    </div>
+                {{else}}    
+                    <div class="form-action">
+                	    <a class="DealerButton" href="/willow-tree-dealership-policy/">See Willow Tree Dealership Policy</a>
+                	</div>
+                {{/contains}}
+            {{/if}}
+        {{/each}}
+    {{/or}}
+    {{#or (if customer.customer_group_name '===' 'Dealer BT')}}
+        {{#each product.custom_fields}}
+        	{{#if name '===' 'Allow Puchase'}}
+        	   {{#contains value "B"}}
+                    <div class="form-action">
+                        <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary" type="submit"
+                            value="{{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_cart'}}{{/if}}">
+                    </div>
+                {{/contains}}
+            {{/if}}
+        {{/each}}
+    {{/or}}
+    {{#or (if customer.customer_group_name '===' 'Select') (if customer.customer_group_name '===' 'SelectT')}}
+        {{#each product.custom_fields}}
+        	{{#if name '===' 'Allow Puchase'}}
+        	   {{#contains value "S"}}
+                    <div class="form-action">
+                        <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary" type="submit"
+                            value="{{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_cart'}}{{/if}}">
+                    </div>
+                {{/contains}}
+            {{/if}}
+        {{/each}}
+    {{/or}}
+{{else}}
+    <div class="form-action">
+        <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary" type="submit"
+            value="{{#if product.pre_order}}{{lang 'products.pre_order'}}{{else}}{{lang 'products.add_to_cart'}}{{/if}}">
+    </div>
+{{/or}}
+
+<script type="text/javascript">
+function listtrackCart(){    
+    fetch('/api/storefront/carts', {credentials: 'include'})
+        .then(function(response) {
+        return response.json();
+    })
+    .then(function(cartInfo) {
+        cartInfo = cartInfo[0];
+        var itemsarray = cartInfo.lineItems.physicalItems;
+        if(itemsarray.length>0){
+        (function(){if(typeof _ltk == 'object'){ltkCode();}else{(function (d) { if (document.addEventListener) document.addEventListener('ltkAsyncListener', d); else { e = document.documentElement; e.ltkAsyncProperty = 0; e.attachEvent('onpropertychange', function (e) { if (e.propertyName == 'ltkAsyncProperty') { d(); } }); } })(function(){ltkCode();});}function ltkCode(){_ltk_util.ready(function(){
+            /********** Begin Custom Code **********/
+            
+             $.each(itemsarray, function( index, item ) {
+                 _ltk.SCA.AddItemWithLinks(item.sku, item.quantity, item.salePrice, item.name, item.imageUrl, item.url);
+            });
+            _ltk.SCA.Submit();
+             /********** End Custom Code ************/
+        })}})();
+        }
+    });
+} 
+$(document).on('click', '#form-action-addToCart', function(event){
+    event.stopPropagation();
+    setTimeout(function(){
+        listtrackCart();
+    }, 3000);
+});
+</script>

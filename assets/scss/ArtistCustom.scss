@@ -1,0 +1,247 @@
+@import "variable";
+
+.ArtistMn {
+	float:left; width:100%; text-align:$align-center;  margin-bottom:35px;
+	.banners{
+		background-color: transparent; padding: 0;
+		.banner{
+			max-width: 100%;
+		}
+		p{
+			font-size: 16px; color: $text-color-standard-gray;
+		
+		}
+	}
+	
+	&.category-desc{
+	    &.SlpCollection{
+	    p{
+		&:last-child{margin-bottom:0;} 
+	    }          
+	    }
+    }
+	
+}
+.TitleMn{text-align: $align-center;}
+
+.ArtistMn img {
+	width:100%;
+}
+.ArtistPage {
+	float:left; width:100%;
+}
+.ArtistPage .LeftBar {
+	float:left; width:250px; padding-top:8px;
+}
+.ArtistPage .LeftBar .page-sidebar {
+	width:100%;
+}
+.ArtistPage .LeftBar .sidebarBlock .sidebarBlock-heading {
+	border-bottom:1px solid #888888; padding-bottom:15px; margin:0px;
+}
+.ArtistPage .LeftBar .sidebarBlock ul.LeftCategories {
+	margin:0px; list-style:none; 
+}
+.ArtistPage .LeftBar .sidebarBlock ul.LeftCategories li.navList-item {
+	border-bottom:1px solid #888888;
+}
+.ArtistPage .LeftBar .sidebarBlock ul.LeftCategories li.navList-item a.navList-action {
+	font-family:$font-arial; color:$text-color-standard-gray; font-weight:$font-weight-bold; line-height:36px; padding:5px 0px; font-size:18px;
+}
+.ArtistPage .PageContent {
+	float:left; width:calc(100% - 250px); padding-left:77px;
+}
+.ArtistPage .PageContent ul.ArtistDetail {
+	margin:0px -12px;
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item {
+	float:left; width:33.33%; padding:17px 12px; text-align:center;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item .ArtistImg {
+	height:281px;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item .ArtistImg img {
+	max-height:281px;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item .navList-action {
+	font-family: $font-palatino; color: $text-color-standard-gray; font-size: 24px; line-height:36px; padding:7px 0px 0px;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item:hover .ArtistImg{opacity: 0.85;}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item:hover .navList-action{
+color: #687782; text-decoration: underline;
+}
+.BlogMn{
+	float: none; margin: 0 0 0 -3%; display: flex; flex-wrap: wrap; justify-content: left; clear: both;
+}
+.SLPMNBottom div{
+	float: left; width: 100%;
+}
+.SLPMNBottom{
+	h2{
+		margin-top: 0;
+	}
+}
+.artistcategory.ArtistPage .LeftBar{
+	padding-top: 0;
+}
+.ArtistMn.SLPMN{
+	margin-bottom: 44px;
+}
+.ArtistPage.artistcategory .LeftBar .sidebarBlock .sidebarBlock-heading{
+	font-size: 36px; line-height: 44px; border-bottom: 0;
+}
+.ArtistPage.artistcategory .PageContent h2{
+	font-size: 36px; line-height: 44px;
+}
+.ArtistMn.SLPMNBottom{margin-bottom: 40px;}
+.BlogMn .blog{width: 47%; float: none; padding: 0; margin: 0 0 3% 3%; border: 0; display: inline-block; vertical-align: top; background: #eee;}
+.BlogMn .blog .blog-post-figure {width: 100%;}
+.BlogMn .blog .blog-post-figure .blog-thumbnail{margin-bottom: 0; display: table; table-layout: fixed; max-width: 100%; width: 100%;}
+.BlogMn .blog .blog-post-figure .blog-thumbnail a {display: table-cell; vertical-align: middle; text-align: center; width: 100%; height: 325px;}
+.BlogMn .blog .blog-post-figure .blog-thumbnail a img {width:auto; max-height:325px;}
+.BlogMn .blog .blog-div{float: left; width: 100%; background-color: #eee;}
+.BlogMn .blog .blog-post-body{width: 100%; text-align: left; padding: 15px 23px; float: left;}
+.BlogMn .blog .blog-post-body .blog-title{margin: 0; font-size: 28px; line-height: 31px;}
+.BlogMn .blog .blog-post-body .blog-title a{color: $text-color-standard-gray;}
+.BlogMn .blog .blog-post-body .blog-title a:hover{color: $color-brown;}
+.BlogMn .blog .blog-post-body .blog-date{display: none;}
+.BlogMn .blog .blog-post-body p{margin: 0 0 9px 0;}
+.BlogMn .blog .blog-post-body .blog-readmore{float: left; width: 100%; margin-bottom: 11px;}
+.BlogMn .blog .blog-post-body .blog-readmore a{color: $color-blue; font-size: 16px; text-decoration: underline; font-family: $font-arial;}
+.BlogMn .blog .blog-post-body .blog-readmore a:hover{color: $color-brown;}
+.ArtistPage.artistcategory .LeftBar .sidebarBlock ul.LeftCategories li.navList-item{border: 0;}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item a{border-top: 1px solid #888888; border-bottom: 1px solid #888888;}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item a:hover{color: $color-brown !important;}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item .navPages-action-moreIcon{display: none;}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item .subnavList{padding: 0 5px; margin-top: 8px; margin-bottom: 8px; display: inline-block !important;}
+.ArtistPage.artistcategory .LeftBar .sidebarBlock ul.LeftCategories li.navList-item .subnavList a.navList-action{border: 0; padding: 0;font-size: 16px; font-weight: 400;}
+.artistcategory{margin-bottom: 15px;}
+.artistcategory .BlogMn .blog-div .blog-title{margin-bottom: 6px;}
+.artist_category_grid{float: left; width: 100%; margin-bottom: 90px !important; margin-left:0; margin-right:0;}
+.artist_category_grid .slick-list{float: left; width: 100%;}
+.artist_category_grid .slick-next{right: -0.7rem; background-color: transparent; border: none;}
+.artist_category_grid .slick-prev{left: -0.7rem; background-color: transparent; border: none;}
+.ArtistPLP {
+	margin:15px 0px 30px 0px;
+}
+.ArtistPLP .Left {
+	float:left; width:310px;
+}
+.ArtistPLP .Left img {
+	max-width:100%; margin:auto; width: auto;
+}
+.ArtistPLP .Right {
+	float:left; width:calc(100% - 310px);
+}
+.ArtistPLP .Right .ContentMn {
+	float:left; width:calc(100% - 310px); text-align:left; padding:0px 15px 0px 10px;
+}
+.ArtistPLP .Right > .plp-banner {
+	float:right; width:310px;
+}
+
+@media only screen and (max-width: $screen-tablet) {
+.ArtistPage .LeftBar {
+	width:100%;
+}
+.ArtistPage .PageContent {
+	width:100%; padding:40px 0px 0px;
+}
+.ArtistMn{
+	margin-bottom: 5px;
+}
+.ArtistPage .LeftBar .sidebarBlock ul.LeftCategories li,.ArtistPage .LeftBar .sidebarBlock .sidebarBlock-heading{padding-left:20px;padding-right:20px;}
+
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item{position: relative; float: left; width: 100%;border-top: 1px solid #888888 !important; border-bottom: 1px solid
+#888888 !important; padding: 0;}
+.ArtistPage.artistcategory .LeftBar .sidebarBlock ul.LeftCategories li.navList-item a.navList-action{float: left; width: auto; border: 0; padding-left: 20px; padding-right: 46px;}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item .navPages-action-moreIcon {display: inline-block;float: right;position: absolute;top: 17px;
+	right: 20px;margin: 0; cursor: pointer;}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item.active .navPages-action-moreIcon{transform: rotate(0);}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item.active .subnavList{display: block !important;}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item .navPages-action-moreIcon svg{fill: #555;}
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item .subnavList {display: none !important; float: left; width: 100%; border-top: 1px solid #888; margin: 0; padding-top: 8px; padding-bottom: 8px;}
+
+.BlogMn{float: none; margin: 0 0 0 -5%;}
+.BlogMn .blog{width: 45%; margin: 0 0 5% 5%;}
+.BlogMn .blog .blog-post-figure .blog-thumbnail a{height: 265px;}
+.BlogMn .blog .blog-post-figure .blog-thumbnail img{max-height: 265px;}
+.BlogMn .blog .blog-post-body {padding: 12px 20px;}
+
+.ArtistPage.artistcategory ul.LeftCategories li.navList-item .subnavList li{float: left; width: 100%;}
+.ArtistPage.artistcategory .LeftBar .sidebarBlock ul.LeftCategories li.navList-item{margin-bottom: -1px;}
+.ArtistMn.SLPMN {margin-bottom: 32px;}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item .ArtistImg {
+	height:auto;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item .ArtistImg img {
+	max-height: 229px;
+}
+.ArtistPage .PageContent ul.ArtistDetail{display: flex; flex-wrap: wrap;}
+
+.artist_category_grid{margin-bottom: 50px !important;}
+.ArtistPLP .Left,
+.ArtistPLP .Right,
+.ArtistPLP .Right .ContentMn,
+.ArtistPLP .Right > .plp-banner {
+	width:100%;
+}
+.ArtistPLP .Right .ContentMn {
+	margin:25px 0px 25px 0px; padding:0px;
+}
+.ArtistPLP .Right > .plp-banner img {
+	max-width:100%; margin:auto;
+}
+
+}
+
+@media only screen and (max-width: $screen-mobile) {
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item {
+	width:50%;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item .navList-action {
+	font-size:18px; line-height:22px; min-height:initial;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item .ArtistImg {
+    height: auto;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item .ArtistImg img {
+    max-height: 100%;
+}
+.ArtistPage .PageContent ul.ArtistDetail li.navList-item{padding: 11px 6px;}
+.ArtistMn{
+	margin-bottom: 6px;
+}
+.ArtistPage.artistcategory .LeftBar .sidebarBlock .sidebarBlock-heading {
+	font-size: 26px;
+	line-height: 30px;
+	border-bottom: 0;
+}
+.ArtistPage.artistcategory .PageContent h2 {
+	font-size: 26px;
+	line-height: 30px;
+}
+.BlogMn {
+	margin: 0;
+	width: 100%;
+}
+.BlogMn .blog {
+	padding: 0px; width: 100%; margin-bottom: 26px; margin-left:0;
+}
+
+.BlogMn .blog .blog-post-figure .blog-thumbnail a{height: 210px;}
+.BlogMn .blog .blog-post-figure .blog-thumbnail img{max-height: 210px;}
+
+.ArtistMn.SLPMNBottom {
+	margin-bottom: 34px;
+}
+.artistcategory {
+	margin-bottom: 10px;
+}
+.ArtistPage .PageContent ul.ArtistDetail {
+	margin: 0 -6px;
+}
+}

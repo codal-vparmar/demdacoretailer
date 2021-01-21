@@ -1,0 +1,117 @@
+.modal--pupuploginWindow {
+	margin: 0;
+}
+
+.modal--pupuploginWindow .alertBox {
+	display: none;
+}
+
+.modal--pupuploginWindow .forgot-password {
+	display: block;
+    margin-top: 12px !important;
+}
+
+.modal--pupuploginWindow {
+    margin: 0;
+    background: #fff;
+    
+    .modal-header {
+        text-align: center;
+        border-bottom: 0px solid #e5e5e5;
+    }
+    
+    .modal-header-title {
+        text-align: center;
+    }
+    
+    .form-actions {
+        input.button.button--primary:hover {
+            background: #888 !important;
+            border-color: #888 !important;
+            color: #fff !important;
+        }
+        
+        .button:hover {
+            background: #444444;
+            color: #ffff;
+            border-color: #444444;
+        }
+    }
+}
+
+#popupLoginWindowForm{
+    .button--primary{
+         @include breakpoint("small") {max-width: 166px !important;} 
+        
+        color: #fff !important;
+        line-height: 24px !important;
+        letter-spacing: 0 !important;
+        text-align: center;
+        background: #555 !important;
+        border: 1px solid #555 !important;
+        border-radius: 5px !important;
+        text-decoration: none !important;
+        transition: all .3s ease-in !important; 
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        height: 44px !important;
+        float: none;
+        display: inline-block !important;
+        vertical-align: middle !important;
+        font-size: 16px !important;
+        font-family: Arial,Helvetica,sans-serif !important;
+        text-transform: capitalize !important;
+        
+        &:hover{
+            background: #888 !important;
+            border-color: #888 !important;
+            color: #fff !important;
+            
+        }
+        
+    }
+.form-actions{text-align:left; }    
+.forgot-password{
+    @include breakpoint("small") {margin: 0 0 0 23px !important; text-align: left;} 
+     
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin-top: 0 !important; 
+    color: #687782 !important; 
+    margin: 0!important; 
+    font-size: 16px;
+    font-family: Arial,Helvetica,sans-serif;
+    text-transform: capitalize;
+    text-align: center;
+    
+    &:hover{color: #7d5841 !important;}
+} 
+
+}
+
+#popupLoginWindow{
+    
+.new-customer-div {
+	float: left;
+	width: 100%;
+	text-align: center;
+	margin-top: 25px;
+	
+	p{
+	     @include breakpoint("small") {margin-bottom: 0;} 
+	     margin-bottom: 18px;
+	     
+	     &:last-child{ margin-bottom: 0px;}
+	     
+	    a{
+	        @include breakpoint("small") {display: inline;} 
+	        display: block; 
+	         
+	        &:hover{color: #7d5841 !important;}
+	    }
+	}
+	
+}
+    
+}

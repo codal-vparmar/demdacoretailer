@@ -1,0 +1,111 @@
+---
+customer:
+    orders:
+        limit: 10
+---
+
+{{#partial "page"}} 
+
+{{#if customer}}
+	<div id="Accountframe">
+	    <iframe id="Accountframeithframe" src="" width="100%" height="1000px" frameborder="0"></iframe>
+	</div>
+{{/if}}  
+    
+<!--
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+<h1 class="page-heading">{{lang 'account.orders.heading' }}</h1>
+{{> components/account/navigation account_page='orders'}}
+
+<main class="account account--fixed">
+    <div class="account-head">
+        {{#if customer.store_credit.value '>' 0}}
+            <div class="alertBox alertBox--storeCredit">
+                {{{lang 'common.store_credit' store_credit=customer.store_credit.formatted}}}
+            </div>
+        {{/if}}
+    </div>
+    <div class="account-body">
+        <section class="account-content">
+            {{#if customer.orders.length}}
+                {{> components/account/orders-list orders=customer.orders}}
+                {{> components/common/small-paginator pagination.orders}}
+            {{else}}
+                {{> components/common/alert-info (lang 'account.orders.none')}}
+            {{/if}}
+        </section>
+    </div>
+</main>
+-->
+
+{{/partial}}
+{{> layout/base}}  
+
+<script type="text/javascript" src="https://www.demdacoretailers.com/content/quick-order/base64.js"></script> 
+<script type="text/javascript" src="https://www.demdacoretailers.com/content/quick-order/qoapi.js"></script>
+<script>
+var custid = '{{customer.id}}';
+var auth = demo();
+
+function getDemDecoData(getCustomerURL){
+var data;
+$.ajax({
+		url: getCustomerURL,
+		method: 'GET',
+		dataType: 'json',
+		crossDomain: true,
+		async: false,
+		beforeSend : function(req) {	
+			req.setRequestHeader('Authorization', auth);
+		},
+		success: function(response){
+			try{
+				/*$notes = response.notes;
+				$dataObj = JSON.parse($notes);
+				$DEMDACO_id = $dataObj.DEMDACO_id;
+				data = $DEMDACO_id;*/
+				data = response;
+			}catch(error){
+				data = '0';
+			}	
+		}
+	});
+	return data;
+}
+var getCustomerURL = "/api/v2/customers/"+custid+".json";
+//var getCustomerURL = "/api/v2/customers/80.json";
+$customerRes = getDemDecoData(getCustomerURL);
+//alert($demdeaco_id);
+$notes = $customerRes.notes;
+$notes_aray = [];
+if($notes)
+  $notes_aray = JSON.parse($notes);
+
+
+if(Object.keys($notes_aray).length > 0){
+   
+    if($notes_aray.DEMDACO_id!='' && $notes_aray.DEMDACO_id !== undefined){
+        $('#Accountframeithframe').css({"display":"block"}); 
+        var iframeurl = 'https://b2bportalpa.demdacoretailers.com/customeraccount?id='+custid;
+        $('#Accountframeithframe').attr('src',iframeurl);
+    }
+    else{
+        window.location.href='/login.php?action=account_created';
+    }
+}else{
+    window.location.href='/login.php?action=account_created'; 
+}
+
+
+    
+/*if($demdeaco_id!='0'){
+    $('#Accountframeithframe').css({"display":"block"}); 
+    var iframeurl = 'https://b2bportalpa.demdacoretailers.com/customeraccount?id='+custid;
+    //var iframeurl = 'https://b2bportalpa.demdacoretailers.com/customeraccount?id=80';
+    $('#Accountframeithframe').attr('src',iframeurl);
+}
+else{
+   $('#Accountframeithframe').css({"display":"none"}); 
+   $('#Accountframe').html('<div class="alertBox alertBox--error errormsgdiv" style="display: flex; margin-top: 56px; justify-content: center;"><div class="alertBox-icon"><icon glyph="ic-error" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon></div><p class="alertBox-column alertBox-message" style="text-align: left; width: auto;"><span class="errormsglabel">Your account does not exist in ERP. Please contact to support.</span></p></div>');
+}*/
+</script>

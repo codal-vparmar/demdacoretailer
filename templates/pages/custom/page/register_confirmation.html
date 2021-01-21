@@ -1,0 +1,50 @@
+{{#partial "page"}}
+<main class="page page-content--register_confirmation">
+   
+   <h1 id="customerCompany" class="page-heading">Welcome,</h1>
+   
+   {{#if page.sub_pages}}
+   <nav class="navBar navBar--sub">
+      <ul class="navBar-section account-navigation">
+         {{#each page.sub_pages}}
+         <li class="navBar-item"><a class="navBar-action" href="{{url}}">{{title}}</a></li>
+         {{/each}}
+      </ul>
+   </nav>
+   {{/if}}
+   <div class="page-content">
+      {{{page.content}}}
+      
+    <p>We hope you enjoy using your new online account to shop, place orders, and access information!</p>
+	
+	<div class="regconf_groupbtn">
+	 <a class="button--primary" href="{{urls.home}}">Start Shopping</a>
+	 
+	 {{#if customer}}
+	 <a class="button--primary" href="{{urls.account.index}}">My Account</a>
+	 {{else}}
+	 <a class="button--primary" href="{{urls.auth.login}}">My Account</a>
+	 {{/if}}
+	</div>
+   
+</div>
+   
+</main>
+{{/partial}}
+{{> layout/base}}
+<script>
+   var xhr = new XMLHttpRequest();
+   xhr.open("GET", "https://b2bportalpn.demdacoretailers.com/dashboard/{{customer.id}}", false);
+   xhr.send();
+   
+   if (xhr.status == 200 && xhr.statusText == "OK") {
+      var resDetails = JSON.parse(xhr.responseText);
+      if(resDetails.AccountName) {
+         $("#customerCompany").text("Welcome, "+resDetails.AccountName);
+      } else {
+         $("#customerCompany").text("Welcome, Retailer");
+      }
+   } else {
+      console.log('Something went wrong');
+   }
+</script>
