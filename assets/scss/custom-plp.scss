@@ -144,7 +144,7 @@ h5{font-size:16px; font-family: $font-arial; color:$text-color-standard-gray; fo
 .card-figcaption-body{transform: translate3d(0, -30px, 0); top: 100%;  width:$full-width;
  a.card-figcaption-button{
   &.quickview{background:rgba(238,238,238,0.9); display:block; border-radius:0; color:$text-color-standard-gray; font-size:14px; padding: 0.7139rem 1.5rem;    text-transform: capitalize;   font-family: $font-arial;
-   &:hover{background:rgba(136,136,136,0.9); color:$color-white;}
+   &:hover{background:#6A6C77; color:$color-white;}
   }
  }
 }
