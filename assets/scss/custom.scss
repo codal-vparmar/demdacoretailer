@@ -215,7 +215,7 @@ backface-visibility: hidden;
 
 
 .navPages div.navPage-subMenu ul li {float: left;width: $full-width;margin: 0 0 5px 0;padding: 0 15px !important;}
-.navPages div.navPage-subMenu ul li a{padding: 2px 0 !important; margin: 0; border-bottom: 1px solid transparent; position: relative; display: inline-block; text-transform: none;}
+.navPages div.navPage-subMenu ul li a{padding: 8px 0 !important; margin: 0; border-bottom: 1px solid transparent; position: relative; display: inline-block; text-transform: none;}
 .navPages div.navPage-subMenu ul li:hover > a{border-color: $color-gray80; font-weight: 700; color: $text-color-standard-gray;}
 .navPages ul li a:visited{color: $text-color-standard-gray;}
 .navPages div.navPage-subMenu ul li > a:hover{background-color: transparent; color: $text-color-standard-gray; font-weight: 700; opacity: 1;}
