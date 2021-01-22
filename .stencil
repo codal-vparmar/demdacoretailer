@@ -1,0 +1,11 @@
+{
+  "normalStoreUrl": "https://www.demdacoretailers.com/",
+  "accessToken": "mr5mvvc6zu0ehsxo91yuc3olip67b7h",
+  "port": "3000",
+  "customLayouts": {
+    "brand": {},
+    "category": {},
+    "page": {},
+    "product": {}
+  }
+}
