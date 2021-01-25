@@ -215,7 +215,7 @@ backface-visibility: hidden;
 
 
 .navPages div.navPage-subMenu ul li {float: left;width: $full-width;margin: 0 0 5px 0;padding: 0 15px !important;}
-.navPages div.navPage-subMenu ul li a{padding: 8px 0 !important; margin: 0; border-bottom: 1px solid transparent; position: relative; display: inline-block; text-transform: none;}
+.navPages div.navPage-subMenu ul li a{padding: 4px 0 !important; margin: 0; border-bottom: 1px solid transparent; position: relative; display: inline-block; text-transform: none;}
 .navPages div.navPage-subMenu ul li:hover > a{border-color: $color-gray80; font-weight: 700; color: $text-color-standard-gray;}
 .navPages ul li a:visited{color: $text-color-standard-gray;}
 .navPages div.navPage-subMenu ul li > a:hover{background-color: transparent; color: $text-color-standard-gray; font-weight: 700; opacity: 1;}
@@ -293,7 +293,7 @@ font-family: "Palatino Linotype","Book Antiqua",Palatino,serif;}
 .about-section{float: left; width: $full-width; background: #eeeeee; padding: 2.4rem;margin-top: 38px;}
 .about-section h2{font-size: 50px; line-height: 63px; color: $text-color-standard-gray; margin: 0 0 9px 0}
 .about-section p{font-size: 19px; color: $text-color-standard-gray; line-height: 28px; margin: 0 0 3px 0;}
-.about-section a{font-size: 19px; text-decoration: underline; line-height: 28px; color: #4D4F56 !important;}
+.about-section #aboutsection a{font-size: 19px; text-decoration: underline; line-height: 28px; color: #4D4F56 !important;}
 .about-section a:hover{color: $color-brown;}
 .home-card-section.home-blog-section{margin-bottom: 0;}
 .about-section.retailer-sec{background: transparent; padding: 0}
@@ -2393,5 +2393,5 @@ background-color:#555555;
 }
 .slick-prev:before, .slick-next:before{color: #6A6C77;}
 .single_wide h2, .single_wide p {
-  color: #s !important;
+  color: #4D4F56 !important;
 }
