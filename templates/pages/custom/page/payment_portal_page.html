@@ -1,0 +1,102 @@
+{{#partial "page"}}
+
+
+
+{{#if customer}}
+	<div id="PayInvoiceWith">
+	    <iframe id="PayInvoiceWithframe" src="" width="100%" height="1000px" frameborder="0"></iframe>
+	</div>
+{{else}}
+	<div id="PayInvoiceWithout">
+	    <iframe id="PayInvoiceWithoutframe" src="https://b2bportalpa.demdacoretailers.com/payInvoice" width="100%" height="1000px" frameborder="0"></iframe>
+	</div>
+{{/if}}
+
+
+<!--
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+<main class="page">
+    {{#unless theme_settings.hide_page_heading }}
+        <h1 class="page-heading">{{ page.title }}</h1>
+    {{/unless}}
+
+    {{#if page.sub_pages}}
+    <nav class="navBar navBar--sub">
+        <ul class="navBar-section account-navigation">
+        {{#each page.sub_pages}}
+            <li class="navBar-item"><a class="navBar-action" href="{{url}}">{{title}}</a></li>
+        {{/each}}
+        </ul>
+    </nav>
+    {{/if}}
+
+    <div class="page-content page-content--centered">
+        {{#replace '%%Syndicate%%' page.content}}
+            {{> components/page/rss_feed}}
+        {{else}}
+            {{{page.content}}}
+        {{/replace}}
+    </div>
+
+    {{#if page.feed}}
+        <ul>
+            {{#each page.feed}}
+                <li>
+                    <h6><a href="{{url}}" target="_blank">{{title}}</a></h6>
+                    <p>{{content}}</p>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+</main>
+-->
+
+{{/partial}}
+
+{{> layout/base}}
+
+<script type="text/javascript" src="https://www.demdacoretailers.com/content/quick-order/base64.js"></script> 
+<script type="text/javascript" src="https://www.demdacoretailers.com/content/quick-order/qoapi.js"></script>
+<script>
+var custid = '{{customer.id}}';
+var auth = demo();
+
+function getDemDecoData(getCustomerURL){
+var data;
+$.ajax({
+		url: getCustomerURL,
+		method: 'GET',
+		dataType: 'json',
+		crossDomain: true,
+		async: false,
+		beforeSend : function(req) {	
+			req.setRequestHeader('Authorization', auth);
+		},
+		success: function(response){
+			try{
+				$notes = response.notes;
+				$dataObj = JSON.parse($notes);
+				$DEMDACO_id = $dataObj.DEMDACO_id;
+				data = $DEMDACO_id;
+			}catch(error){
+				data = '0';
+			}	
+		}
+	});
+	return data;
+}
+var getCustomerURL = "/api/v2/customers/"+custid+".json";
+//var getCustomerURL = "/api/v2/customers/80.json";
+$demdeaco_id = getDemDecoData(getCustomerURL);
+
+if($demdeaco_id!='0'){
+    $('#PayInvoiceWithframe').css({"display":"block"}); 
+    var iframeurl = 'https://b2bportalpa.demdacoretailers.com/paymentcenter/'+$demdeaco_id+'?id='+custid;
+    $('#PayInvoiceWithframe').attr('src',iframeurl);
+}
+else{
+   $('#PayInvoiceWithframe').css({"display":"none"}); 
+   $('#PayInvoiceWith').html('Your accound does not exist in ERP. Please contact to support.');
+}
+</script>

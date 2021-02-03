@@ -1,0 +1,183 @@
+{{#partial "page"}}
+<main class="page page-content--register">
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+   
+   <h1 class="page-heading">Set Up Retailer Online Access</h1>
+   
+   {{#if page.sub_pages}}
+   <nav class="navBar navBar--sub">
+      <ul class="navBar-section account-navigation">
+         {{#each page.sub_pages}}
+         <li class="navBar-item"><a class="navBar-action" href="{{url}}">{{title}}</a></li>
+         {{/each}}
+      </ul>
+   </nav>
+   {{/if}}
+   <div class="page-content">
+      {{{page.content}}}
+      
+      <!-- Step START --> 
+	  
+<div class="login retailerOnlineRegistration">
+   <div class="alertBox alertBox--error" id="demdacoRetailerError" style="display: none;">
+      <div class="alertBox-column alertBox-icon">
+          <icon glyph="ic-error" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+          <p class="alertBox-column alertBox-message">
+              <span></span>
+          </p>
+      </div>
+  </div>
+<form class="login-form form" action="" method="post" id="loginForm">
+<div class="login-row step-one">
+ <div class="stepnum">
+  <p>Step 1 of 2</p>  
+ </div>
+<div class="reg-row">
+ <div class="form-field form-field--input">
+	<label class="form-label" for="demdaco_account">Demdaco Account # 
+	
+	<div class="tooltip"> <img src="{{cdn 'assets/img/tooltip-icon.png'}}">
+	 <span class="tooltiptext">Locate your account number on an invoice, packing slip, statement, or by contacting Customer Care.</span>
+	</div>
+	
+	</label>
+	<input class="form-input" id="demdaco_account" type="text" name="demdaco_account">
+</div>
+		
+<div class="form-field form-field--input form-field--inputEmail">
+	<label class="form-label" for="login_email">Email </label>
+	<input class="form-input" name="login_email" id="login_email" type="email">
+</div>
+       
+	   
+<div class="form-actions">
+   <input type="button" id="customerSignUp" class="button button--primary" value="Submit">
+</div>
+</div>     
+
+</div>
+ 
+
+<div class="login-row step-second">
+ <div class="stepnum">
+  <p>Step 2 of 2</p>  
+ </div>
+ 
+ <div class="st_owner_name" id="showingCustomerId">
+   <h3></h3> 
+ </div> 
+<div class="reg-row"> 
+   <div class="form-field form-field--input form-field--inputPassword form-field--success">
+      <label class="form-label" for="demdaco_password">Create Password:</label>
+      <input class="form-input" id="demdaco_password" type="password" name="demdaco_account" autocomplete="off">
+   </div>
+   <div class="form-field form-field--input form-field--inputconfirmPassword form-field--success">
+      <label class="form-label" for="demdaco_password_confirm">Confirm Password:</label>
+      <input class="form-input" name="demdaco_password_confirm" id="demdaco_password_confirm" type="password" autocomplete="off">
+      <span style="display: none;" class="form-inlineMessage"></span>
+   </div>
+
+
+<div class="form-actions">
+	<input type="button" id="confirm_pass_btn" class="button button--primary" value="Submit">
+</div>
+
+</div>
+</div>
+
+</form>
+
+  <div class="new-customer-div">
+	<p>Already have online access? <a href="{{urls.auth.login}}">Sign In</a></p>            
+	<p>New to DEMDACO? <a href="{{urls.auth.create_account}}">Begin wholesale application</a></p>
+  </div> 
+
+</div>
+
+      <!-- Step CLOSE -->            
+   </div>
+   
+</main>
+{{/partial}}
+{{> layout/base}}
+
+<script>
+var demCredentials = {};
+$("#demdacoRetailerError span").text('');
+$(".step-second").hide();
+
+$("#customerSignUp").click(function(){
+   demCredentials.DemdacoEmail = $('#login_email').val();
+   demCredentials.DemdacoAccountNumber = $('#demdaco_account').val();
+   $('#customerSignUp').prop('disabled', true);
+   if (typeof demCredentials.DemdacoEmail != 'undefined' && typeof demCredentials.DemdacoAccountNumber != 'undefined' && demCredentials.DemdacoEmail != '' && demCredentials.DemdacoAccountNumber != '') {
+            $("#demdacoRetailerError span").text('');
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://b2bportalpn.demdacoretailers.com/checkAccount/" + demCredentials.DemdacoAccountNumber + "/" + demCredentials.DemdacoEmail, false);
+            xhr.send();
+            if (xhr.status == 200 && xhr.statusText == "OK") {
+               var resDetails = JSON.parse(xhr.responseText);
+               if(resDetails.status == 'success') {
+                  demCredentials.customer_id = resDetails.id;
+                  $("#showingCustomerId h3").text("Customer # "+demCredentials.customer_id);
+                  $(".step-one").hide();
+                  $(".step-second").show();
+               } else {
+                  $("#demdacoRetailerError").show();
+                  $("#demdacoRetailerError span").text(resDetails.message);
+                  $('#customerSignUp').prop('disabled', false);
+               }
+            } else {
+               $('#customerSignUp').prop('disabled', false);
+            }
+   }
+});
+
+$("#confirm_pass_btn").click(function(){
+   if(demCredentials.customer_id && demCredentials.customer_id != 'undefined') {
+      var demdaco_password = $('#demdaco_password').val();
+      var demdaco_password_confirm = $('#demdaco_password_confirm').val();
+      if(demdaco_password_confirm!="" || demdaco_password!=""){
+            if(demdaco_password!=demdaco_password_confirm){
+               $(".form-field--inputconfirmPassword").removeClass("form-field--success");
+               $(".form-field--inputconfirmPassword").addClass("form-field--error");
+               $(".form-inlineMessage").html("You must enter a password and confirm password same.");		 
+               $(".form-inlineMessage").show();
+               return false;
+            } else {
+               $(".form-field--inputconfirmPassword").removeClass("form-field--error");
+               $(".form-field--inputconfirmPassword").addClass("form-field--success"); 
+               $(".form-inlineMessage").hide();
+               var reqBody = {
+                  "credentials" : {
+                     "password": demdaco_password,
+                     "password_confirmation": demdaco_password_confirm
+                  }
+               };
+               var bodyData = JSON.stringify(reqBody);
+
+               var xhr = new XMLHttpRequest();
+               xhr.open('POST', "https://b2bportalpn.demdacoretailers.com/updatepassword/"+demCredentials.customer_id+"?login=true", true);
+               xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+               xhr.setRequestHeader("Content-length", bodyData.length);
+               xhr.setRequestHeader("Connection", "close");
+               xhr.onreadystatechange = function() {
+                  if(xhr.readyState == 4 && xhr.status == 200) {
+                      var tokenResponse = JSON.parse(xhr.responseText);
+                      window.location.href = "/login/token/"+tokenResponse[0].login_token;
+                     
+                  } else if(xhr.readyState == 4 && xhr.status != 200){
+                     $("#demdacoRetailerError span").text("Error in updating password.");
+                  }
+               }
+               xhr.send(bodyData)
+            }
+         }
+   } else {
+      window.location.href='/register-online-account/';
+   }
+});
+
+
+</script>
+

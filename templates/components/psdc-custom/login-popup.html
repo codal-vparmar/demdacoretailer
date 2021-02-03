@@ -1,0 +1,46 @@
+  <div id="popupLoginWindow" class="modal modal--small modal--pupuploginWindow" data-reveal>
+	<div class="modal-header">
+		<h1>Retailer Sign In</h2>
+		<a href="#" class="modal-close" aria-label="Close" role="button"><span aria-hidden="true">&#215;</span></a>
+	</div>
+	<div class="modal-body">
+		<div class="alertBox alertBox--error">
+			<div class="alertBox-column alertBox-icon">
+				<icon glyph="ic-error" class="icon" aria-hidden="true">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg>
+				</icon>
+			</div>
+			<p class="alertBox-column alertBox-message"><span>Oops, something went wrong. Please try again.</span></p>
+		</div>
+		<div class="alertBox alertBox--success">
+			<div class="alertBox-column alertBox-icon">
+				<icon glyph="ic-success" class="icon" aria-hidden="true">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg>
+				</icon>
+			</div>
+			<p class="alertBox-column alertBox-message"><span>You are now logged in!</span></p>
+		</div>
+		<form class="form" id="popupLoginWindowForm">
+			<div class="form-field">
+				<label class="form-label" for="login_email">Email Address:</label>
+				<input class="form-input" name="login_email" id="login_email" type="email" placeholder="guest@guest.com">
+			</div>
+			<div class="form-field">
+				<label class="form-label" for="login_pass">Password:</label>
+				<input class="form-input" id="login_pass" type="password" name="login_pass" placeholder="guest123">
+			</div>
+			<div class="form-actions">
+				<input type="submit" for="submit" class="button button--primary" value="Sign in">
+			{{!--	<a class="button" href="/login.php?action=create_account">Register</a> --}}
+				<a class="forgot-password" href="/login.php?action=reset_password">Forgot password?</a>
+			</div>
+		</form>
+	
+		 <div class="new-customer-div">
+            <p>Already a DEMDACO retailer? <a href="/register-online-account/">Set up online access</a></p>            
+            <p>New to DEMDACO? <a href="{{urls.auth.create_account}}">Begin wholesale application</a></p>
+         </div>
+     
+	</div>
+	<div class="loadingOverlay" style="display: none;"></div>
+</div>

@@ -1,0 +1,861 @@
+{{#partial "page"}}
+
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+<main class="page page-content--quick_order">
+    {{#unless theme_settings.hide_page_heading }}
+        <h1 class="page-heading">{{ page.title }}</h1>
+    {{/unless}}
+
+    {{#if page.sub_pages}}
+    <nav class="navBar navBar--sub">
+        <ul class="navBar-section account-navigation">
+        {{#each page.sub_pages}}
+            <li class="navBar-item"><a class="navBar-action" href="{{url}}">{{title}}</a></li>
+        {{/each}}
+        </ul>
+    </nav>
+    {{/if}}
+
+<div class="page-content">
+        
+{{{page.content}}}
+ 
+<div class="qo_main">
+  <div class="qo_second_title">
+	<p>Choose an option to get started!</p>
+  </div>
+  <div class="qo_step">
+	  <ul class="tabs" data-tab role="tablist">
+		   <li class="tab tab-item"><a class="tab-title" href="#tab-enter" role="tab"><span>Enter</span><small>Items Number</small></a></li>
+		   <li class="tab tab-import"><a class="tab-title" href="#tab-import" role="tab"><span>Import</span><small>.CSV Spreadsheet</small></a></li>
+		   <li class="tab tab-orderhistory"><a class="tab-title" href="#tab-order" role="tab"><span>Order History</span><small>Look up past items</small></a></li>
+	  </ul> 
+	 <div class="tabs-contents">
+		  <div role="tabpanel" class="tab-content has-items" id="tab-enter">
+			  <div class="pt_quickorder">
+				  <div class="quickorder" id="content">
+					<table class="utilityTable" id="quickOrderTable">
+					  <thead>
+						<tr>
+						  <th class="itemNum">Item Number</th>
+						  <th class="productcolumn">Product </th>
+						  <th class="quantitycolumn">Quantity</th>
+						  <th class="pricecolumn">Price</th>
+						  <th class="removeitemcolumn removetext">Remove</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr class="rowbundle">
+						  <td class="itemnumbercolumn" valign="top"><input type="text" name="productID" class="itemnumber" size="30" maxlength="30" placeholder="Example: 5001250000" /></td>
+						  <td class="productcolumn" valign="top"><div class="productname default"> Details will appear here when you enter item number </div><div class="stockstatus default"></div></td>
+						  <td class="quantitycolumn" valign="top" data-th="Quantity">
+						      
+						      <button class="button qtyminus qtybtn" data-action="dec">
+                                <span class="is-srOnly">Decrease Quantity:</span>
+                                <i class="icon" aria-hidden="true">
+                                    <svg>
+                                        <use xlink:href="#icon-keyboard-arrow-down"></use>
+                                    </svg>
+                                </i>
+                            </button>
+							<input type="text" class="quantity" name="qty" readonly="readonly" />
+							<button class="button qtyplus qtybtn" data-action="inc">
+                                <span class="is-srOnly">Increase Quantity:</span>
+                                <i class="icon" aria-hidden="true">
+                                    <svg>
+                                        <use xlink:href="#icon-keyboard-arrow-up"></use>
+                                    </svg>
+                                </i>
+                            </button>
+						  </td>
+						  {{#if customer}}
+						  <td class="unitpricecolumn" valign="top" data-th="Price"></td>
+						  {{else}}
+						  <td class="unitpricecolumnnotsign" valign="top" data-th="Price"></td>
+						  {{/if}}
+						  <td class="removeitemcolumn" valign="top">
+						      <button class="remove ir ui-icon-closethick" type="submit" value="Remove">
+						          <span><i class="icon" aria-hidden="true">
+                                    <svg>
+                                        <use xlink:href="#icon-close"></use>
+                                    </svg>
+                                </i></span></button>
+                                <button type="submit" class="button button--primary addSingleCart" value="Add to Cart"  style="display: none">Add to Cart</button>
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+					<div class="quickorderfooter">
+					  <div class="clearfix">
+						<button type="submit" id="addMoreItems" class="button" value="+ Add More Items"><i class="icon" aria-hidden="true">
+                                    <svg>
+                                        <use xlink:href="#icon-add"></use>
+                                    </svg>
+                                </i> Add More Items</button>
+						<div class="quickorderright">
+						  <button type="submit" class="button button--primary addToCart" value="Add All to Cart">Add All to Cart</button>
+						</div>
+					  </div>
+					</div>
+					<div class="errorMsg"> </div>
+				</div>
+			  </div>
+		  </div>
+		  <div role="tabpanel" class="tab-content has-import" id="tab-import"> 
+				<p>Import list of item numbers and quantities by uploading a .CSV file.</p>
+				<a class="btn csvbtn" data="1" href="/content/CSV/SampleCSV.csv" download="SampleCSV.csv"><i class="icon" aria-hidden="true">
+                                    <svg>
+                                        <use xlink:href="#icon-keyboard-arrow-down"></use>
+                                    </svg>
+                                </i> Download .CSV template</a>
+				<label for="fileinput" class="button uploadProcess" value="global.global.importitemlist">
+					 <span><i class="icon" aria-hidden="true">
+                                    <svg>
+                                        <use xlink:href="#icon-keyboard-arrow-up"></use>
+                                    </svg>
+                                </i> Import Item List
+						<input type="file" id="fileinput" />
+					 </span>
+				</label>
+		  </div>
+		  <div role="tabpanel" class="tab-content has-order" id="tab-order"> 
+			{{#if customer}}
+				<h3>Choose a Date Range to bring up item numbers from your previous orders.</h3>
+				<div class="DateMn">
+					<div class="Left">
+						<label>Choose:</label>
+						<select name="selectMonth" id="selectMonth">
+							<option value="">Choose Option</option>
+							<option value="3">3 Months</option>
+							<option value="6">6 Months</option>
+							<option value="12">12 Months</option>
+						</select>
+					</div>
+					<div class="Right">
+						<label>Custom:</label>
+						<input id="DateStart" autocomplete="off" class="DateInput" placeholder="Start Date" type="text" value="">
+						<input id="DateEnd" autocomplete="off" placeholder="End Date" class="DateInput" type="text" value="">
+						<button type="submit" id="submitSearch" class="button" value="Submit">Submit</button>
+					</div>
+				</div>
+					<div class="alertBox alertBox--error errormsgdiv" style="display: none;margin-top: 56px;">
+						<div class="alertBox-icon">
+							<icon glyph="ic-error" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+						</div>
+						<p class="alertBox-column alertBox-message">
+							<span class="errormsglabel"></span>
+						</p>
+					</div>
+				<div class="RecentHistoryMn"></div>
+			{{else}}
+				<div class="alertBox alertBox--error">
+						<div class="alertBox-icon">
+							<icon glyph="ic-error" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+						</div>
+						<p class="alertBox-column alertBox-message">
+							<span>Please sign in to your account to access your order history.</span>
+						</p>
+					</div>
+			{{/if}}
+		  </div>
+	 </div>
+  </div>
+</div>
+</div>
+
+
+</main>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script type="text/javascript" src="https://www.demdacoretailers.com/content/quick-order/base64.js"></script> 
+<script type="text/javascript" src="https://www.demdacoretailers.com/content/quick-order/qoapi.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript"></script>
+<script type="text/javascript">
+$("#DateStart").datepicker({ 
+	dateFormat: 'yy-mm-dd'
+	//minDate: 0,
+    //beforeShowDay: $.datepicker.noWeekends 
+})
+$("#DateEnd").datepicker({ 
+	maxDate: 0,
+	dateFormat: 'yy-mm-dd'
+    //beforeShowDay: $.datepicker.noWeekends 
+})
+
+$(document).on('click', '.tab-item', function(){
+	$('.removetext').html('Remove');
+	$('.remove').css({"display":"block"});
+	$('.addSingleCart').css({"display":"none"});
+	$('.quickorderfooter').css({"display":"block"});
+});
+$(document).on('click', '.tab-orderhistory', function(){
+	$('.removetext').html('');
+	$('.remove').css({"display":"none"});
+	$('.addSingleCart').css({"display":"block"});
+	$('.quickorderfooter').css({"display":"none"});
+});
+
+$(document).on('change','#selectMonth', function(){
+	var selectedMonth = $(this).val();
+	if(selectedMonth!=''){
+		$('#DateStart').val('');
+		$('#DateEnd').val('');
+	}
+});
+$(document).on('change','#DateStart, #DateEnd', function(){
+	var selectedMonth = $(this).val();
+	if(selectedMonth!=''){
+		$("#selectMonth").val("");
+	}
+});
+
+var custid = '{{customer.id}}';
+var auth = demo();
+
+function getDemDecoData(getCustomerURL){
+var data;
+$.ajax({
+		url: getCustomerURL,
+		method: 'GET',
+		dataType: 'json',
+		crossDomain: true,
+		async: false,
+		beforeSend : function(req) {	
+			req.setRequestHeader('Authorization', auth);
+		},
+		success: function(response){
+			try{
+				$notes = response.notes;
+				$dataObj = JSON.parse($notes);
+				$DEMDACO_id = $dataObj.DEMDACO_id;
+				data = $DEMDACO_id;
+			}catch(error){
+				data = '0';
+			}	
+		}
+	});
+	return data;
+}
+//var getCustomerURL = "/api/v2/customers/80.json";
+var getCustomerURL = "/api/v2/customers/"+custid+".json";
+$demdeaco_id = getDemDecoData(getCustomerURL);
+//console.log($demdeaco_id);
+if($demdeaco_id=='0'){
+	$('#submitSearch').html("Submit");	
+	$('.errormsgdiv').css({"display":"flex"});
+	$('.errormsglabel').html('Your accound does not exist in ERP. Please contact to support.');
+	$('#submitSearch').attr("disabled", "disabled");
+}
+
+$(document).on('click','#submitSearch', function(){
+	$(".RecentHistoryMn").html('');
+	$startDate = $('#DateStart').val();
+	$endDate = $('#DateEnd').val();
+	$selectedMon = $("#selectMonth").val();
+	$sdate='';$edate='';
+	if($startDate!='' && $endDate!='' || $selectedMon!=''){
+		if($selectedMon!=''){
+			var fullDate = new Date();
+			var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+			$edate = fullDate.getFullYear()+ twoDigitMonth + fullDate.getDate();
+
+			var currentDate = new Date(fullDate.getFullYear()+'/'+ twoDigitMonth +'/'+ fullDate.getDate());
+			currentDate.setMonth(currentDate.getMonth() - $selectedMon);
+			var twoDigitMonth1 = ((currentDate.getMonth().length+1) === 1)? (currentDate.getMonth()+1) : '0' + (currentDate.getMonth()+1);
+			$sdate = currentDate.getFullYear()+ twoDigitMonth1 + currentDate.getDate();
+
+		}else{
+			$sdate = $startDate.replace(/-/g, "");
+			$edate = $endDate.replace(/-/g, "");
+		}
+    }else{
+    	$('#submitSearch').html("Submit");	
+		$('.errormsgdiv').css({"display":"flex"});
+		$('.errormsglabel').html('Please choose at least one option.');
+	}	
+	
+	if($sdate!='' && $edate!=''){
+	$(this).html("Processing...");
+		// get the order history
+		$.ajax({
+			url: 'https://dev-demdaco.stage-codal.net/index.php/api/v1/quickorderhistory',
+			method: 'POST',
+			data: { account_id: $demdeaco_id, start_date: $sdate, end_date: $edate},  // 17232
+			dataType: 'json',
+			crossDomain: true,
+			async: true,
+			success: function(response){
+				
+				try{
+					var Items = response.Items;
+					
+					$.grep( Items, function( n, i ) {
+						$sku = n.SKU[0];
+						$qty = n.Quantity[0];
+						//console.log($sku)+'  '+console.log($qty);
+						
+						if ($('input[name=productID]').filter(function() {
+								return !this.value;
+							}).length === 0) {
+							addNewRow1();
+						}
+						var $productIDInput1 = $('input[name=productID]').filter(function() {
+							return !this.value;
+						}).first();
+						var $productQtyInput1 = $('input[name=qty]').filter(function() {
+							return !this.value;
+						}).first();
+						
+						
+						$productIDInput1.val($sku);
+		                if($qty!="")
+		                {
+		                    $productQtyInput1.val($qty);
+		                    $productIDInput1.attr('pqty',$qty);
+		                    $productIDInput1.attr('id',$sku);
+		                }
+					    $productIDInput1.trigger('change');
+						
+					});	
+
+					setTimeout(function(){
+					  	 $('#submitSearch').html("Submit");	
+						 //$('.uploadmsg').remove();
+						 $('.errormsgdiv').css({"display":"none"});
+						 $(".RecentHistoryMn").append($(".pt_quickorder").clone()); 
+						 $("#quickOrderTable").find("tr:gt(5)").remove();
+						 $('#tab-enter .itemnumber').val('');
+						 $('#tab-enter .productname').html(' Details will appear here when you enter item number ');
+						 $('#tab-enter .quantity').val('');
+						 $('#tab-enter span.min').remove();
+						 $('#tab-enter span.motm').remove();
+						 $('#tab-enter .standardprice').html('');
+						 $('#tab-enter .productcolumn img').remove();
+						 $('#tab-enter .stockstatus .out').remove();
+						 $('#tab-enter .avail').remove();
+
+						}, 12000);
+				}catch(error){
+					$('#submitSearch').html("Submit");	
+					$('.errormsgdiv').css({"display":"flex"});
+					$('.errormsglabel').html('Sorry, we can’t find any products for this time period. Try selecting a different date range.');
+				}	
+			}
+		});
+	}
+});
+
+function addNewRow1() {
+		var $tr = $('#quickOrderTable > tbody:last-child tr:last-child');
+		var $clone = $tr.clone();
+		$clone.find(':text').val('');
+		$clone.find('input[type="number"]').val('');
+		$clone.find('.salesprice').remove();
+		$clone.find('.productname').text();
+		$clone.find('.stockstatus').text();
+		$clone.find('.min').remove();
+		$clone.find('.motm').remove();
+		$clone.find('.stst').remove();
+		$clone.find('img').remove();
+		$tr.after($clone);
+}
+
+var basket = {};
+$(document).on('click', '.addSingleCart', function(){
+		$(this).html("Processing...");
+		$parentDiv = $(this).parent().parent('.rowbundle');
+		$qtyDiv = $parentDiv.find('.quantity');
+		var key = $qtyDiv.attr('pro-id');
+		if(key){
+			var value = $qtyDiv.val()
+
+			if(value!='')
+			{
+				/*var object = new Object(); 
+				basket[key] = value;	*/	
+				addToCart($(this), key, value);		
+			}
+		}
+		/*if (Object.keys(basket).length) 
+		{	
+			console.log(basket);		
+			addToCart($(this));
+		}*/
+});
+var cartUrl = '/cart.php',
+	//bind this to our event    
+	addToCart = function(thisObject, key, value) {
+		
+		//console.log(JSON.stringify(basket));
+		/*for (var key in basket) 
+		{*/			
+		       $.ajax({
+				//url: "/cart.php?action=add&product_id="+key+"&qty="+basket[key],
+				url: "/cart.php?action=add&product_id="+key+"&qty="+value,
+				type: 'post',
+				async: false,
+				data: 
+				{
+                    'action': 'add',
+                    'product_id': key,
+                    'qty':value
+				},
+                success: function (data)
+				{	
+					thisObject.html("Added");	
+					thisObject.prop( "disabled", true );
+					$currentQty = $('#cartQty').html();
+					var totalQty = parseInt($currentQty) + parseInt(value);
+					$('#cartQty').html(totalQty);	
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+					//console.log("Error:- "+textStatus);
+                }
+            });
+		//}
+	/*document.QuickAdd.reset();*/
+	/*window.location.replace(cartUrl);
+	$('#quickOrderTable input').each(function()
+	{
+		    $(this).val("");
+	});*/
+	  
+}; 
+
+</script>
+
+
+ 
+<script type="text/javascript">
+
+$(document).ready(function() {
+	var customergrouphelperQ = '';	
+    try {
+        if(customergrouphelper){				
+        customergrouphelperQ = customergrouphelper;
+    	}
+    } catch(e){
+        customergrouphelperQ = '';
+    }  
+    var groupforAllowPurchase = "";
+    if (customergrouphelperQ == "Dealer A" || customergrouphelperQ == "Dealer AT"){ 
+      groupforAllowPurchase = "A";
+    }
+    if (customergrouphelperQ == "Dealer B" || customergrouphelperQ == "Dealer BT"){ 
+      groupforAllowPurchase = "B";
+    }
+    if (customergrouphelperQ == "Select" || customergrouphelperQ == "Select T"){ 
+      groupforAllowPurchase = "S";
+    }
+	//console.log(customergrouphelperQ);
+	for (var i = 0; i < 5; i++) {
+		addNewRow();
+	}
+	$('#addMoreItems').on('click keyup', function(e) {
+		e.preventDefault();
+		for (var i = 0; i < 5; i++) {
+			addNewRow();
+		}
+	});
+	/**
+	 * Adds additional row at the bottom of the table
+	 *
+	 * @returns {void}
+	 */
+	function addNewRow() {
+		var $tr = $('#quickOrderTable > tbody:last-child tr:last-child');
+		var $clone = $tr.clone();
+		$clone.find(':text').val('');
+		$clone.find('input[type="number"]').val('');
+		$clone.find('.salesprice').remove();
+		$clone.find('.productname').text('Details will appear here when you enter item number.');
+		$clone.find('.stockstatus').text();
+		$clone.find('.min').remove();
+		$clone.find('.motm').remove();
+		$clone.find('.stst').remove();
+		$clone.find('img').remove();
+		$clone.find('.stockstatus').find('.avail').remove();
+		$clone.find('.productname').addClass('default');
+		$clone.find('.unitpricecolumnnotsign').html('');
+		$clone.find('.unitpricecolumn').html('');
+		
+
+		$tr.after($clone);
+	}
+	/**
+	* Removes row on remove button click
+	*/
+	$(document).on('click keyup','button.remove', function(e) {
+		e.preventDefault();
+		$(this).closest('.rowbundle').remove();
+	});
+	/** 
+	 * Main form logic - makes ajax request to get product data upon entering product ID
+	 */
+	$(document).on('change','#quickOrderTable input[name=productID]', function() {
+		var currentrow = $(this).closest('.rowbundle');
+		var $productname = $(currentrow).find('div.productname');
+		var $productcolumn = $(currentrow).find('.productcolumn');
+		var $quantitycolumn = $(currentrow).find('.quantitycolumn');
+		var $quantity = $quantitycolumn.find('.quantity');
+		var $stockstatus = $(currentrow).find('.stockstatus');
+		var $unitpricecolumn = $(currentrow).find('.unitpricecolumn');
+		var $unitpricecolumnnotsign = $(currentrow).find('.unitpricecolumnnotsign');
+		var $removeitemcolumn = $(currentrow).find('.removeitemcolumn');
+		
+		var productCode = this.value.trim().toUpperCase();
+		/*if(!productCode.match('-ZZB2B')){
+			productCode = productCode+'-ZZB2B';	
+		}*/
+		
+		
+		var strURL = "/api/v2/products.json";
+		var auth = demo();
+		function getObjects(obj, key, val) {
+			var objects = [];
+			for (var i in obj) {
+				if (!obj.hasOwnProperty(i)) continue;
+				if (typeof obj[i] == 'object') {
+					objects = objects.concat(getObjects(obj[i], key, val));
+				} else if (i == key && obj[key] == val) {
+					objects.push(obj);
+				}
+			}
+			return objects;
+		}
+		//alert(productCode)
+		$.ajax({
+			url: strURL,
+			method: 'GET',
+			dataType: 'json',
+			data: {sku:productCode},
+			crossDomain: true,
+			beforeSend : function(req) {	
+				req.setRequestHeader('Authorization', auth);
+			},
+			success: function(response){
+					try{
+						//start grep
+						$.grep( response, function( n, i ) {
+						
+						var urlcustomfields = "/api/v2/products/"+n.id+"/custom_fields/";
+		                var allowpurchase = "";
+					
+						$.ajax({
+							url: urlcustomfields,
+							method: 'GET',
+							dataType: 'json',
+							data: { },
+							crossDomain: true,
+							beforeSend: function( req ) {
+								req.setRequestHeader('Authorization', auth);
+							}
+						})
+						.done(function( data ) {
+							allowpurchase =  data;
+							var allowPurchaseObj = getObjects(allowpurchase, 'name', 'Allow Puchase');
+							//console.log(allowPurchaseObj);
+							var motm = getObjects(allowpurchase, 'name', 'Inner Pack Qty');
+							
+							allowpurchaseVal= allowPurchaseObj[0].text;
+							allowpurchaseVal = allowpurchaseVal.includes(groupforAllowPurchase);
+							if (n.sku && allowpurchaseVal == true){
+								emptyRow();
+								$productname.parent('.productcolumn').attr('colspan',1);
+								$quantitycolumn.css({"display":"table-cell"});
+								$unitpricecolumn.css({"display":"table-cell"});
+								$removeitemcolumn.css({"display":"table-cell"});
+								$productname.addClass('find');
+								$productname.removeClass('Notfind');
+								$productname.removeClass('default');
+								$productname.text(n.name);
+								var date = new Date(n.preorder_release_date);
+								$preorder = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+								if(n.preorder_release_date){
+								    $stockstatus.addClass('find');
+								    $stockstatus.removeClass('default');
+									$stockstatus.append("<span class='preorder'>Estimated in stock " + $preorder + "</span>");
+								}else{
+								    $stockstatus.addClass('find');
+								    $stockstatus.removeClass('default');
+									if(n.availability_description === 'IN STOCK') {
+										$stockstatus.append("<span class='avail'>" + n.availability_description + "</span>");
+									}else{
+										$stockstatus.append("<span class='avail out'>" + n.availability_description + "</span>");
+									}
+								}
+								
+								if (n.primary_image.standard_url) {
+									$productcolumn.prepend("<img src=" + n.primary_image.standard_url + ">");
+								}
+								if (n.order_quantity_minimum) {
+									$quantitycolumn.append("<span class='min'>Order a minimum of: <span>" + n.order_quantity_minimum + "</span></span>")												
+									var existingqty =0;
+									if($quantity.val()!='')
+									{
+										existingqty = $quantity.val();
+									}
+									if(existingqty<=0 || $('input[type="file"]').val()=='')
+									{
+										if ($('#'+n.sku).length){
+											var historyqty = $('#'+n.sku).attr('pqty');
+											if(historyqty<n.order_quantity_minimum){
+												$quantity.val(n.order_quantity_minimum);
+											}else{
+												$quantity.val(historyqty);	
+											}
+											
+										}else{
+											$quantity.val(n.order_quantity_minimum);
+										}
+									}
+									$quantity.attr({'pro-id':n.id});
+										$quantity.attr("pid", data.ID);
+									
+								}
+								if (motm[0]) {
+									$quantitycolumn.append("<span class='motm'>Then in increments of:<span id='motmquantity'>"+ motm[0].text +"</span></span>");
+								}
+								if (n.calculated_price) {
+									var price = parseFloat(n.calculated_price).toFixed(2);
+									$unitpricecolumn.append("<div class='standardprice'>$" + price + "</div>");
+									$unitpricecolumnnotsign.append("<div class='NotLoggedin'><a href='/login.php'>Log in for pricing</a></div>");
+								}
+								//$unitpricecolumn.append("<div class='salesprice'>" + n.sale_price + "</div>");
+							} 
+							if (n.sku && allowpurchaseVal == false) {
+								$productname.addClass('Notfind');
+								$productname.removeClass('find');
+								$productname.removeClass('default');
+								$productname.text('Sorry, you are not allowed to add this product');
+								emptyRow();
+							}
+						})
+						.fail(function(data) {
+							$productname.addClass('Notfind');
+							$productname.removeClass('find');
+							$productname.removeClass('default');
+							$productname.text('Sorry, we can\'t find this product - do you have the right item number?');
+							emptyRow();
+						});	
+					});
+				//end grep
+				}
+				catch(error){
+					
+					$productname.parent('.productcolumn').attr('colspan',4);
+					$quantitycolumn.css({"display":"none"});
+					$unitpricecolumn.css({"display":"none"});
+					$removeitemcolumn.css({"display":"none"});
+					$productname.addClass('Notfind');
+					$productname.removeClass('find');
+					$productname.removeClass('default');
+					$productname.text('Sorry, we can\'t find this product - do you have the right item number?');
+					emptyRow();
+					
+				}
+		}
+		});
+		
+		function emptyRow() 
+		{	
+			var existingqty =0;
+			if($quantity.val()!='')
+			{
+				existingqty = $quantity.val();
+			}
+			
+			if(existingqty<=0 || $('input[type="file"]').val()=='')		
+			{
+				$quantity.val(0);
+			}
+			$quantitycolumn.find('span.min').remove();
+			$quantitycolumn.find('span.motm').remove();
+			$stockstatus.find('.avail').remove();
+			$stockstatus.find('.preorder').remove();
+			$productcolumn.find('img').remove();
+			$unitpricecolumn.find('.standardprice').remove();
+			$unitpricecolumn.find('.salesprice').remove();
+			$unitpricecolumnnotsign.find('.NotLoggedin').remove();
+		}
+
+	/**
+	 * Main add to cart logic - calls app.minicart.add with appropriate data
+	 */
+	$(".addToCart").click(function(e) {
+	});
+	//an array of product id's (more on this later)
+	var cartUrl = '/cart.php',
+	//bind this to our event    
+	addToCart = function() {
+		$('.quickorderright').html("<input class='button' type='image' src='{{cdn 'img/loading.svg'}}' style='background-color:#FFF;' />");
+		//console.log(JSON.stringify(basket));
+		for (var key in basket) 
+		{			
+			       $.ajax({
+					url: "/cart.php?action=add&product_id="+key+"&qty="+basket[key],
+					type: 'post',
+					async: false,
+					data: 
+				{
+                    'action': 'add',
+                    'product_id': key,
+                    'qty':basket[key]
+				},
+                success: function (data)
+				{					
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+					//console.log("Error:- "+textStatus);
+                }
+            });
+		}
+	/*document.QuickAdd.reset();*/
+	window.location.replace(cartUrl);
+	$('#quickOrderTable input').each(function()
+	{
+		    $(this).val("");
+	});
+	  
+	}; 
+	var basket = {};
+	$(document).on('click', '.addToCart', function(){ 
+	
+		$('#quickOrderTable .quantity').each(function() {
+	
+			var key = $(this).attr('pro-id');
+			if(key){
+				var value = $(this).val()
+	
+				if(value!='')
+				{
+					var object = new Object(); 
+					basket[key] = value;				
+					//console.log(value);
+					//basket.push(object)
+				}
+			}
+		});
+		if (Object.keys(basket).length) 
+		{			
+			addToCart()
+			//alert(JSON.stringify(basket));			
+		}
+	});
+	/**
+	 * Main fill form from file cart logic
+	 */	
+
+	// This button will increment the value
+	//$(".qtyplus").click(function(e) {
+	$(document).on('click', '.qtyplus', function(e){
+		e.stopPropagation();
+        e.stopImmediatePropagation();
+		var fieldName = $(this).attr('field');
+		
+		var $getMin = parseInt($(this).parent().find('.min > span').text());
+		var $getMotm = parseInt($(this).parent().find('#motmquantity').text());
+		//console.log("$getMotm ="+$getMotm);
+		var $getInput = $(this).parent().find('input[name="qty"]');
+		var currentVal = parseInt($getInput.val());
+		//console.log('clicked');
+		if (!isNaN(currentVal)) {	
+			if($getMotm<=0 || $getMotm==null || isNaN($getMotm)){
+				$getMotm=1;
+			}
+			$getInput.val(currentVal + $getMotm);
+		} else {
+			$getInput.val($getMin);
+		}
+		
+	});
+	// This button will decrement the value till 0
+	//$(".qtyminus").click(function(e) {
+	$(document).on('click', '.qtyminus', function(e){		
+		e.stopPropagation();
+        e.stopImmediatePropagation();
+		var fieldName = $(this).attr('field');
+		var $getMin = parseInt($(this).parent().find('.min > span').text());
+		var $getInput = $(this).parent().find('input[name="qty"]');
+
+		var $getMotm = parseInt($(this).parent().find('#motmquantity').text());
+		var currentVal = parseInt($getInput.val());
+		if (!isNaN(currentVal) && currentVal > $getMin) {
+			if($getMotm<=0 || $getMotm==null || isNaN($getMotm)){
+				$getMotm=1;
+			}
+			$getInput.val(currentVal - $getMotm);
+		} else {
+			$getInput.val($getMin);
+		}
+	});
+});
+
+$('input[type="file"]').on('change', function(e) {
+		$('<div class="uploadmsg">Upload is in progress!</div>').insertAfter(".uploadProcess");
+		
+		//console.log("Here");
+		var $errorMessage = $('.errorMsg');
+		if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+			$errorMessage.text(app.resources["FILEAPINOSUPPORTED"]);
+			return;
+		}
+		input = document.getElementById('fileinput');
+		if (!input) {
+		
+			$errorMessage.text(app.resources["NOFILEINPUT"]);
+		} else if (!input.files) {
+			$errorMessage.text(app.resources["NOTSUPPORTED"]);
+		} else if (!input.files[0]) {
+			$errorMessage.text(app.resources["SELECTFILE"]);
+		} else {
+			var file = input.files[0];		
+			var fr = new FileReader();
+			fr.onload = function() 
+			{
+				
+				var pids = fr.result.split(/[\s]+/);	
+
+				for (var i = 0; i < pids.length; i++)
+				 {
+					if(i > 0) {
+					 var pidsrow = pids[i].split(/[\s,]+/);						
+					
+						if ($('input[name=productID]').filter(function() {
+								return !this.value;
+							}).length === 0) {
+							addNewRow();
+						}
+						var $productIDInput = $('input[name=productID]').filter(function() {
+							return !this.value;
+						}).first();
+						var $productQtyInput = $('input[name=qty]').filter(function() {
+							return !this.value;
+						}).first();
+						
+
+						$productIDInput.val(pidsrow[0]);
+		                if(pidsrow[1]!="")
+		                {
+		                    $productQtyInput.val(pidsrow[1]);								
+		                   // $productQtyInput.trigger('change');
+		                }
+					    $productIDInput.trigger('change');
+				
+				}
+				}	
+			};
+			fr.readAsText(file);
+		}
+		setTimeout(function(){
+		 $('.uploadmsg').remove();
+		 $("#tab-import").append($(".pt_quickorder").clone()); 
+		}, 12000);
+		});
+});
+
+</script> 
+{{/partial}}
+{{> layout/base}}

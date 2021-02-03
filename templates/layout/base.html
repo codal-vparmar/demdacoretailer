@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{{ locale_name }}">
+    <head>
+<!-- Google Tag Manager -->
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T6VKJTS');</script>
+
+<!-- End Google Tag Manager -->
+
+        <title>{{ head.title }}</title>
+        {{{ resourceHints }}}
+        {{{ head.meta_tags }}}
+        {{{ head.config }}}
+        {{#block "head"}} {{/block}}
+
+        <link href="{{ head.favicon }}" rel="shortcut icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <script>
+            {{!-- Change document class from no-js to js so we can detect this in css --}}
+            document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+        </script>
+        {{!-- Load Lazysizes script ASAP so images will appear --}}
+        <script>
+            {{!-- Only load visible elements until the onload event fires, after which preload nearby elements. --}}
+            window.lazySizesConfig = window.lazySizesConfig || {};
+            window.lazySizesConfig.loadMode = 1;
+        </script>
+        <script async src="{{cdn 'assets/dist/theme-bundle.head_async.js'}}"></script>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">		
+        <link href="https://fonts.googleapis.com/css?family=Amiri:400,400i,700,700i&display=swap" rel="stylesheet"> 
+
+        {{ getFontsCollection }}
+        {{{stylesheet '/assets/css/theme.css'}}}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        {{{head.scripts}}}
+
+        {{~inject 'themeSettings' theme_settings}}
+        {{~inject 'genericError' (lang 'common.generic_error')}}
+        {{~inject 'maintenanceMode' settings.maintenance}}
+        {{~inject 'urls' urls}}
+        {{~inject 'secureBaseUrl' settings.secure_base_url}}
+        {{~inject 'cartId' cart_id}}
+        {{~inject 'template' template}}
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!--<script src="//findify-assets-2bveeb6u8ag.netdna-ssl.com/search/prod/b2bdemdaco.mybigcommerce.com.min.js" async defer></script>-->
+        <script src="//assets.findify.io/b2bdemdaco.mybigcommerce.com.min.js" async defer></script>
+
+    </head>
+    <body class="page-{{page_type}} {{#if customer}}CustomerSignIn{{else}}CustomerNotSignIn{{/if}}">
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6VKJTS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+         <svg data-src="{{cdn 'img/icon-sprite.svg'}}" class="icons-svg-sprite"></svg>
+         
+         <svg xmlns="http://www.w3.org/2000/svg" class="injected-svg icons-svg-sprite">
+             <defs> <path id="stumbleupon-path-1" d="M 0 0.0749333 L 31.9251 0.0749333 L 31.9251 31.984 L 0 31.984" /> </defs>
+             <symbol xmlns="http://www.w3.org/2000/svg" id="icon-arrow-down" viewBox="0 0 36 36"> <path d="M 16.5 6 v 18.26 l -8.38 -8.38 l -2.12 2.12 l 12 12 l 12 -12 l -2.12 -2.12 l -8.38 8.38 v -18.26 h -3 Z" /> </symbol>
+             <symbol xmlns="http://www.w3.org/2000/svg" id="icon-keyboard-arrow-down" viewBox="0 0 24 24"><path d="M 7.41 7.84 L 12 12.42 l 4.59 -4.58 L 18 9.25 l -6 6 l -6 -6 Z" /></symbol>
+             <symbol xmlns="http://www.w3.org/2000/svg" id="icon-keyboard-arrow-up" viewBox="0 0 24 24"><path d="M 7.41 15.41 L 12 10.83 l 4.59 4.58 L 18 14 l -6 -6 l -6 6 Z" /></symbol>
+             </svg>
+         
+
+        {{~#and settings.privacy_cookie settings.is_eu_ip_address}}
+            {{> components/common/cookie}}
+        {{/and}}
+
+        {{> components/common/header }}
+        {{> components/common/body }}
+		{{> components/common/footer }}
+
+        <script>window.__webpack_public_path__ = "{{cdn 'assets/dist/'}}";</script>
+        <script src="{{cdn 'assets/dist/theme-bundle.main.js'}}"></script>
+        <script>
+            {{!-- Exported in app.js --}}
+            window.stencilBootstrap("{{page_type}}", {{jsContext}}).load();
+        </script>
+
+        {{{footer.scripts}}}        
+
+        <div data-findify-event="update-cart">
+          {{#each cart.items}}
+            {{#if type '===' 'Item' }}
+              <div data-findify-item-id="{{product_id}}" data-findify-unit-price="{{ price.value }}" data-findify-quantity="{{ quantity }}"></div>
+            {{/if}}
+          {{/each}}
+        </div> 
+		
+		{{> components/psdc-custom/login-popup }}
+		
+		<div class="popup-block hide">
+			<div class="popup-content">
+				<div class="close-popup"><a href="#">x</a></div>
+				<div class="logo-content">
+					<img src="{{getImage settings.store_logo.image 'logo_size'}}" alt="{{settings.store_logo.title}}" title="{{settings.store_logo.title}}">
+				</div>
+				<div class="popup-inner-content">
+					<h4>The website isn't optimized for Internet Explorer</h4>
+					<p class="first-text">We recommend using <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a>, <a href="https://www.google.com/chrome/?brand=CHBD&gclid=EAIaIQobChMItJTH-YHb6AIVVZGPCh0DYgRgEAAYASAAEgKV3PD_BwE&gclsrc=aw.ds">Chrome</a> or <a href="https://support.apple.com/downloads/safari">Safari</a>. click a logo to download the browser.</p>
+					<ul class="icon-list">
+						<li><a href="https://www.mozilla.org/en-US/firefox/new/"><img src="https://cdn11.bigcommerce.com/s-t0ahxsctcb/product_images/uploaded_images/firefox-logo.png"></a></li>
+						<li><a href="https://www.google.com/chrome/?brand=CHBD&gclid=EAIaIQobChMItJTH-YHb6AIVVZGPCh0DYgRgEAAYASAAEgKV3PD_BwE&gclsrc=aw.ds"><img src="https://cdn11.bigcommerce.com/s-t0ahxsctcb/product_images/uploaded_images/chrome-logo.png"></a></li>
+						<li><a href="https://support.apple.com/downloads/safari"><img src="https://cdn11.bigcommerce.com/s-t0ahxsctcb/product_images/uploaded_images/safari-browser-logo.png"></a></li>    
+					</ul>
+					<a href="#" class="visite-site-btn">Visit this site anyway</a>
+				</div>
+			</div>
+		</div>
+		<div class="popup-block-backdrop hide" ></div>
+		<script>
+			function setCookie(e,t,i){var o=new Date;o.setTime(o.getTime()+24*i*60*60*1e3);var n="expires="+o.toUTCString();document.cookie=e+"="+t+";"+n+";path=/"}
+			function getCookie(e){for(var n=e+"=",t=decodeURIComponent(document.cookie).split(";"),o=0;o<t.length;o++){for(var r=t[o];" "==r.charAt(0);)r=r.substring(1);if(0==r.indexOf(n))return r.substring(n.length,r.length)}return""}
+			function msieversion() {
+				var ua = window.navigator.userAgent;
+				var msie = ua.indexOf("MSIE ");
+				if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)){console.log( getCookie('iefirstload'));
+				   if(!getCookie('iefirstload') || getCookie('iefirstload') == 'false' ){
+					   $('.popup-block,.popup-block-backdrop').removeClass('hide');
+					   setCookie('iefirstload',true,1);
+				   }
+				}
+				else {
+				}
+				return false;
+			}
+			msieversion();
+			$('.close-popup a,.visite-site-btn').click(function(e){
+				e.preventDefault();
+				$('.popup-block,.popup-block-backdrop').addClass('hide');
+			});
+		</script>
+		<div id='ZN_6xHoTHS9lqeQQL3'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+        <script>(function(){var s = document.createElement('script'),e = ! document.body ? document.querySelector('head') : document.body;s.src = 'https://acsbapp.com/apps/app/assets/js/acsb.js';s.async = s.defer = true;s.onload = function(){acsbJS.init({statementLink : '',feedbackLink : '',footerHtml : '',hideMobile : false,hideTrigger : false,language : 'en',position : 'right',leadColor : '#146FF8',triggerColor : '#146FF8',triggerRadius : '50%',triggerPositionX : 'right',triggerPositionY : 'bottom',triggerIcon : 'default',triggerSize : 'medium',triggerOffsetX : 20,triggerOffsetY : 20,mobile : {triggerSize : 'small',triggerPositionX : 'right',triggerPositionY : 'center',triggerOffsetX : 0,triggerOffsetY : 0,triggerRadius : '50%'}});};e.appendChild(s);}());</script>		
+		
+    </body>
+</html>

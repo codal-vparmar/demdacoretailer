@@ -1,0 +1,239 @@
+---
+cart: true
+---
+{{#partial "page"}}
+<div class="page"> 
+      
+    <main class="page-content cart-container" data-cart>
+         
+ 
+        {{> components/cart/page-title}}
+        
+        <div class="HoldMsg" style="display:none;">
+            <div class="alertBox alertBox--error errormsgdiv" style="display: flex; margin-top: 56px; justify-content: center;"><div class="alertBox-icon"><icon glyph="ic-error" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon></div><p class="alertBox-column alertBox-message" style="text-align: left; width: auto;"><span class="errormsglabel">Your Account is on Hold</span></p>
+            </div>
+        </div>
+        
+      
+        <div data-cart-status class="free-shipping">
+            {{> components/cart/status-messages}}
+        </div>
+        {{#if cart.items.length}}
+            <div class="loadingOverlay"></div>
+
+            <div data-cart-content class="cart-content">  
+                {{> components/cart/content}}
+            </div>
+
+            <div data-cart-totals>
+                {{> components/cart/totals}}
+            </div>
+            {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
+            {{#if cart.show_primary_checkout_button}}
+                <div class="cart-actions checkout-btn">
+                    <a class="button button--primary" href="{{urls.checkout.single_address}}" title="{{lang 'cart.checkout.title'}}">{{lang 'cart.checkout.button'}}</a>
+                    {{#if cart.show_multiple_address_shipping}}
+                        <a class="checkoutMultiple" href="{{urls.checkout.multiple_address}}">
+                            {{lang 'cart.preview.checkout_multiple'}}
+                        </a>
+                    {{/if}}
+                </div>                
+            {{/if}}
+            <div class="cart-actions continue_shopping">
+                <a class="button cont-shop" href="{{urls.home}}" title="{{lang 'cart.continue_shopping'}}">{{lang 'cart.continue_shopping'}}</a>
+            </div>
+            <div class="cart-actions share_cart">
+                <a id="navigateToSharePopup" data-reveal-id="popupShareCart" data-target="popupShareCart" data-toggle="modal">{{lang 'cart.share_cart'}}</a>
+            </div>
+            <div class="batches">
+                <img src="{{cdn 'img/security-badges.png'}}" />
+            </div>
+            {{else}} 
+                {{> components/common/login-for-pricing}}
+            {{/or}}
+           
+        {{else}}
+            <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
+        {{/if}}
+
+    </main>
+</div>
+<div id="popupShareCart" class="modal" data-reveal>
+    <div class="modal-content">
+    <div class="modal-header">
+        <h2 class="modal-header-title">Customer Information</h2>
+        <a href="#" id="modalCloseBtn" class="modal-close" aria-label="Close" role="button"><span aria-hidden="true">&#215;</span></a>
+        
+    </div>
+    <div class="modal-body">
+        <form class="form-group" id="popupLoginWindowForm">
+                <div class="row">
+                    <div class="form-field col s6">
+                        <label class="form-label" for="recepient_email">Recipient Email Address:<small style="color: #9a3324;text-transform: lowercase;font-weight: 600;font-size: 12px;">*required</small></label>
+                        <input class="form-input" name="recepient_email" id="recepient_email" data-field-type="EmailAddress" type="email" required>
+                    </div>
+                    <div class="form-field col s6">
+                        <label class="form-label" for="sender_fname">Your First Name:<small style="color: #9a3324;text-transform: lowercase;font-weight: 600;font-size: 12px;">*required</small></label>
+                        
+                        <input class="form-input" id="sender_fname" type="text" name="sender_fname" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-field col s6">
+                        <label class="form-label" for="sender_lname">Your Last Name:<small style="color: #9a3324;text-transform: lowercase;font-weight: 600;font-size: 12px;">*required</small></label>
+                        <input class="form-input" id="sender_lname" type="text" name="sender_lname" required>
+                    </div>
+                    <div class="form-field col s6">
+                        <label class="form-label" for="company_name">Your Company Name:(If applicable)</label>
+                        <input class="form-input" id="company_name" type="text" name="company_name">
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="form-label" for="comments">Comments:</label>
+                    <textarea class="form-input" id="comments" name="comments" rows="3"></textarea>
+                </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div style="display:inline;width:100%;">
+            <div  style="display: inline-flex !important;margin-bottom: unset !important;margin-right: auto;" class="alertBox alertBox--success cartShareSuccessfully">
+                <div class="alertBox-column alertBox-icon">
+                    <icon glyph="ic-success" class="icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg>
+                    </icon>
+                </div>
+                <p class="alertBox-column alertBox-message" style="padding-left: 10px;"><span>Your cart has been shared successfully!</span></p>
+            </div>
+            <div  style="display: inline-flex !important;margin-bottom: unset !important;margin-right: auto;" class="alertBox alertBox--error" id="cartShareError">
+                <div class="alertBox-column alertBox-icon">
+                    <icon glyph="ic-error" class="icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg>
+                    </icon>
+                </div>
+                <p class="alertBox-column alertBox-message"><span>Oops, something went wrong. Please try again.</span></p>
+            </div>
+            <div style="display: inline;height: auto;margin-left: auto;position: relative;">
+                <input type="button" class="button button--primary" value="Share" id="shareCartSubmitBtn">
+                <!-- <input type="button" class="button button--default" value="Close" id="shareCartCloseBtn" data-dismiss="modal"> -->
+            </div>
+        </div>
+    </div>
+        <div class="loadingOverlay" style="display: none;"></div>
+    </div>
+</div>
+
+ <script type="text/javascript"> 
+
+listtrackCart();
+
+function listtrackCart(){    
+    fetch('/api/storefront/carts', {credentials: 'include'})
+        .then(function(response) {
+        return response.json();
+    })
+    .then(function(cartInfo) {
+        cartInfo = cartInfo[0];
+        var itemsarray = cartInfo.lineItems.physicalItems;
+        if(itemsarray.length>0){
+        (function(){if(typeof _ltk == 'object'){ltkCode();}else{(function (d) { if (document.addEventListener) document.addEventListener('ltkAsyncListener', d); else { e = document.documentElement; e.ltkAsyncProperty = 0; e.attachEvent('onpropertychange', function (e) { if (e.propertyName == 'ltkAsyncProperty') { d(); } }); } })(function(){ltkCode();});}function ltkCode(){_ltk_util.ready(function(){
+            /********** Begin Custom Code **********/
+            
+             $.each(itemsarray, function( index, item ) {
+                 _ltk.SCA.AddItemWithLinks(item.sku, item.quantity, item.salePrice, item.name, item.imageUrl, item.url);
+            });
+            _ltk.SCA.Submit();
+             /********** End Custom Code ************/
+        })}})();
+        }
+    });
+}
+
+$(document).on('click', '.down, .up, .cart-remove', function(event){
+    event.stopPropagation();
+    setTimeout(function(){
+        listtrackCart();
+    }, 4000);
+});
+
+$(document).on('click','.cart-remove',function(){
+    $cartItems = $('.cart-list tr').length;
+    $cartItems = $cartItems-1;
+    if($cartItems==0)
+        (function(){if(typeof _ltk == 'object'){ltkCode();}else{(function (d) { if (document.addEventListener) document.addEventListener('ltkAsyncListener', d); else { e = document.documentElement; e.ltkAsyncProperty = 0; e.attachEvent('onpropertychange', function (e) { if (e.propertyName == 'ltkAsyncProperty') { d(); } }); } })(function(){ltkCode();});}function ltkCode(){_ltk_util.ready(function(){
+        /********** Begin Custom Code **********/
+        _ltk.SCA.ClearCart();
+        /********** End Custom Code ************/
+    })}})();
+});
+</script> 
+
+
+{{/partial}}
+{{> layout/base}}
+<link rel="stylesheet" href="/content/css/jquery-ui.css">
+<script src="/content/js/jquery-ui.js"></script>
+<script>
+    $(".cartShareSuccessfully").hide();
+    $("#cartShareError").hide();
+    var data = {};
+    $(document).ready(function(){
+        $('#navigateToSharePopup').click( function() {
+            $(".cartShareSuccessfully").hide();
+            $("#cartShareError").hide();
+            $( '#popupLoginWindowForm' ).each(function(){
+                this.reset();
+            });
+        });
+    $('#shareCartSubmitBtn').click(function(e){
+        $(".cartShareSuccessfully").hide();
+        $("#cartShareError").hide();
+        cart_id="{{cart_id}}";
+        recepient_email = $("#recepient_email").val().trim();
+        sender_fname = $("#sender_fname").val().trim();
+        sender_lname = $("#sender_lname").val().trim();
+        company_name = $("#company_name").val().trim();
+        comments = $("#comments").val().trim();
+        if(typeof recepient_email != 'undefined' && typeof sender_fname != 'undefined' && typeof sender_lname != 'undefined'
+         && recepient_email != '' && sender_fname != '' && sender_lname !='') {
+            if(!IsEmail(recepient_email)) {
+                $("#cartShareError").show();
+                $("#cartShareError span").text("Enter valid email!");
+                return false;
+            }
+            data = {"cart-id":cart_id,"recepient-email":recepient_email,"sender-fname":sender_fname,"sender-lname":sender_lname,"company-name":company_name,"comments":comments};
+            $.ajax({
+               url: 'https://dev-demdaco.stage-codal.net/index.php/api/sharecart',
+               method: 'POST',
+               data: data,
+               dataType: 'json',
+               crossDomain: true,
+               async: true,
+               success: function (data) {
+                    if(data.error){
+                        $("#cartShareError").show();
+                        $("#cartShareError span").text(data.error);
+                    }else{
+                        $(".cartShareSuccessfully").show();
+                    }
+                },
+                error: function (e) {
+                    //error
+                    $("#cartShareError span").show();
+                    console.log(e);
+                }
+         });
+         } else {
+            $("#cartShareError").show();
+            $("#cartShareError span").text("Please fill required fields!");
+         }
+    })
+})
+    function IsEmail(email) {
+        var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if(!regex.test(email)) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
