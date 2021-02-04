@@ -1,0 +1,298 @@
+
+<div id="NHoliday" style="display: none;" class="alertBox alertBox--info">
+    <div class="alertBox-column alertBox-icon">
+        <icon glyph="ic-success" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+    </div>
+    <p class="alertBox-column alertBox-message">
+        <span>Add $1,500+ in Holiday products to see a special offer!</span>
+    </p>
+</div>
+
+<div id="Holiday" style="display: none;" class="alertBox alertBox--info">
+    <div class="alertBox-column alertBox-icon">
+        <icon glyph="ic-success" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+    </div>
+    <p class="alertBox-column alertBox-message">
+        <span>Congrats! You added $1500 or more in Holiday products, which means you'll receive 10% off of those items only. Apply coupon code <strong>2021JANSHOW1500</strong> to receive the offer. <br> Note: The discount will <strong>not</strong> be reflected at the time of checkout but will be displayed on your invoice when the products ship. 10% off discount will <strong>only</strong> apply to Fall &amp; Holiday Items.</span>
+    </p>
+</div>
+
+        <div id="WTfree" style="display: none;" class="alertBox alertBox--info">
+            <div class="alertBox-column alertBox-icon">
+                <icon glyph="ic-success" class="icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></icon>
+            </div>
+            <p class="alertBox-column alertBox-message">
+                <span>Congratulations! Your signed Willow Tree gift has been added to your cart. If your order qualifies for the holiday discount, it will be automatically applied to your order. You do not need to add another coupon code to receive the holiday discount.  <br> Note: The Fall/Holiday promotion will <strong>not</strong> be reflected at the time of checkout but will be displayed on your invoice when the products ship. 10% off discount will <strong>only</strong> apply to Fall &amp; Holiday Items.</span>
+            </p>
+        </div>
+
+<table class="cart" data-cart-quantity="{{cart.quantity}}">
+    <thead class="cart-header">
+        <tr>
+            <th class="cart-header-item" colspan="2">{{lang 'cart.checkout.item'}}</th>
+            <th class="cart-header-item price">{{lang 'cart.checkout.price'}}</th>
+            <th class="cart-header-item empty" width="93">&nbsp;</th>
+            <th class="cart-header-item cart-header-quantity">{{lang 'cart.checkout.quantity'}}</th>
+            <th class="cart-header-item price">{{lang 'cart.checkout.total'}}</th>
+            <th class="cart-header-item remove" width="100">Remove</th>
+        </tr>
+    </thead>
+    <tbody class="cart-list">
+        {{#each cart.items}}
+            <tr class="cart-item" data-item-row>
+                <td class="cart-item-block cart-item-title" colspan="2" data-th="{{lang 'cart.checkout.item'}}">
+                    <figure>
+                        {{#if type '==' 'GiftCertificate'}}
+                        <img class="cart-item-fixed-image" src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="GiftCertificate" title="GiftCertificate">
+                    {{else}}
+                        {{> components/common/responsive-img
+                            image=image
+                            class="cart-item-image"
+                            fallback_size=../../theme_settings.productthumb_size
+                            lazyload='disabled'
+                            default_image=../../theme_settings.default_image_product
+                        }}
+                    {{/if}}
+                    </figure>
+                    <div class="cart-details">
+                    
+					<h4 class="cart-item-name"><a href="{{url}}">{{name}}</a></h4>                   
+                    <p class="cart-sku">{{sku}}</p>
+                    {{#if options}}
+                        <dl class="definitionList">
+                            {{#each options}}
+                                <dt class="definitionList-key">{{name}}:</dt>
+                                <dd class="definitionList-value">
+                                    {{#if is_file}}
+                                        <a href="/viewfile.php?attributeId={{../id}}&cartitem={{../../id}}">{{value}}</a>
+                                    {{else}}
+                                        {{value}}
+                                    {{/if}}
+                                </dd>
+                            {{/each}}
+                        </dl>
+
+                        <a href="#" class="change-link" data-item-edit="{{id}}">{{lang 'cart.checkout.change'}}</a>
+                    {{/if}}
+
+                    {{#if release_date}}
+                        <p>{{release_date}}</p>
+                    {{/if}}
+                    
+                    {{#if availability '==' 'IN STOCK'}}
+                        <div class="pro_info availability">{{availability}}</div>            
+                    {{else if availability '==' 'In Stock'}}
+                        <div class="pro_info availability">{{availability}}</div> 
+                    {{else}}
+                        <div class="pro_info availability out">{{availability}}</div>
+                    {{/if}}     
+
+                    {{#if type '==' 'GiftCertificate'}}
+                        <a class="change-link" href="{{edit_url}}">{{lang 'cart.checkout.change'}}</a>
+                    {{/if}}
+                    {{> components/cart/item-giftwrap this}}
+                    {{#if event_date}}
+                        <dl class="cart-item-options">
+                            <dt class="cart-item-option-title">
+                                {{event_date.name}}
+                            </dt>
+
+                            <dd class="cart-item-option-description">
+                                {{event_date.date}}
+                            </dd>
+                        </dl>
+                    {{/if}}
+                    </div>
+                </td>
+                <td class="cart-item-block mobile-block"></td>
+                <td class="cart-item-block cart-item-info price" data-th="{{lang 'cart.checkout.price'}}">
+                    <span class="cart-item-label">{{lang 'cart.checkout.price'}}</span>
+                    {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
+                        <span class="cart-item-value {{#if price_discounted}}price--discounted{{/if}}">{{price.formatted}}</span>
+                        {{#if price_discounted}}
+                            <span class="cart-item-value">{{price_discounted.formatted}}</span>
+                        {{/if}}
+                    {{else}}
+                        {{> components/common/login-for-pricing}}
+                    {{/or}}
+                </td>
+                <td class="cart-header-item empty" width="93">&nbsp;</td>
+                <td class="cart-item-block cart-item-info cart-item-quantity" data-th="{{lang 'cart.checkout.quantity'}}">
+
+                    <label class="form-label cart-item-label" for="qty-{{id}}">{{lang 'products.quantity'}}</label>
+                    <div class="form-increment">
+                        {{#if can_modify}}
+                            <button class="button button--icon down" data-cart-update data-cart-itemid="{{id}}" data-action="dec">
+                                <span class="is-srOnly">{{lang 'products.quantity_decrease'}}</span>
+                                <i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-keyboard-arrow-down" /></svg></i>
+                            </button>
+                        {{/if}}
+                        <input class="form-input form-input--incrementTotal cart-item-qty-input"
+                               id="qty-{{id}}"
+                               name="qty-{{id}}"
+                               type="tel"
+                               value="{{quantity}}"
+                               data-quantity-min="{{product.min_purchase_quantity}}"
+							   data-quantity-motm="{{#each this.custom_fields}}{{#if name '===' 'Inner Pack Qty'}}{{value}}{{/if}}{{/each}}"
+                               data-quantity-max="{{product.max_purchase_quantity}}"
+                               data-quantity-min-error="{{lang 'products.quantity_min' quantity=min_purchase_quantity}}"
+                               data-quantity-max-error="{{lang 'products.quantity_max' quantity=max_purchase_quantity}}"
+                               min="1"
+                               pattern="[0-9]*"
+                               data-cart-itemid="{{id}}"
+                               data-action="manualQtyChange"
+                               aria-live="polite"{{#unless can_modify}} disabled{{/unless}}>
+						{{#if can_modify}}
+                            <button class="button button--icon up" data-cart-update data-cart-itemid="{{id}}" data-action="inc">
+                                <span class="is-srOnly">{{lang 'products.quantity_increase'}}</span>
+                                <i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-keyboard-arrow-up" /></svg></i>
+                            </button>
+                        {{/if}}
+                    </div>
+
+                    <div class="productView-info-value">
+                        <div class="min-order-qty-div" data-min-qty="{{min_purchase_quantity}}">
+                        {{#if min_purchase_quantity}}
+                            {{lang 'products.min_purchase_quantity'}} {{min_purchase_quantity}}
+                            <input type="hidden" name="minpurchase-{{id}}" id="minpurchase-{{id}}" value="{{min_purchase_quantity}}">
+                        {{/if}}                        
+                        <br />
+                         {{#filter custom_fields 'Inner Pack Qty' property='name' }}
+                               {{lang 'products.increment_of'}} {{value}} 
+                                <input class="CustomIncreCart" type="hidden" name="innerpackqty-{{id}}" id="innerpackqty-{{id}}" value="{{value}}">
+                        {{/filter}}                  
+                        </div>       
+                    </div>
+                </td>
+
+                <td class="cart-item-block cart-item-info price" data-th="{{lang 'cart.checkout.total'}}">
+                    <span class="cart-item-label">{{lang 'cart.checkout.total'}}</span>
+                    {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
+                        <strong class="cart-item-value {{#if total_discounted}}price--discounted{{/if}}">{{total.formatted}}</strong>
+                        {{#if total_discounted}}
+                            <strong class="cart-item-value">{{total_discounted.formatted}}</strong>
+                        {{/if}}
+                    {{else}}
+                        {{> components/common/login-for-pricing}}
+                    {{/or}}
+                </td>
+                <td class="cart-item-block cart-item-info remove" width="100">
+                    {{#if can_modify}}
+                        <a class="cart-remove icon" data-cart-itemid="{{id}}" href="#" data-confirm-delete="{{lang 'cart.confirm_delete'}}">
+                            <img src="{{cdn 'img/remove-icn.png'}}" alt="Remove">
+                        </a>
+                    {{else}}
+                        {{#if type '==' 'GiftCertificate'}}
+                            <a class="cart-remove icon" data-cart-itemid="{{id}}" href="#" data-confirm-delete="{{lang 'cart.confirm_delete'}}">
+                                <img src="{{cdn 'img/remove-icn.png'}}" alt="Remove">
+                            </a>
+                        {{/if}}
+                    {{/if}}
+                </td>
+            </tr>
+            <p class="season" style="display: none;">{{#each this.custom_fields}}{{#if name '===' 'Seasonality'}}{{value}}{{/if}}{{/each}}</p>
+        {{/each}}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        var cart = [];
+        var skus = document.querySelectorAll('.cart-sku');
+        var prices = document.querySelectorAll('strong.cart-item-value');
+        var seasons = document.querySelectorAll('.season');
+        for (var i = 0; i < skus.length; i++) {     
+            if (skus[i].innerText.length > 6){
+                var brand = "Portfolio"
+            } else{
+                var brand = "Willow Tree"
+            }
+            var price = prices[i].innerText;
+            var season = seasons[i].innerText;
+            cart.push({"price": price ,"season": season, "brand": brand});
+            console.log(brand)
+            console.log(price)
+            console.log(season)
+            console.log(cart)
+        }
+        var priceTotal = [];
+        console.log(cart)
+        cart.forEach(function(item, index){
+            if (item.brand == "Portfolio" && item.season !== "EVERYDAY"){
+                priceTotal.push(parseFloat(item.price.replace("$", "").replace(",", "")));
+                console.log(priceTotal)
+            } else {
+                console.log("Willow Tree does not qualify")
+            }
+        })
+        console.log(priceTotal)
+        var full = priceTotal.reduce((a, b) => a + b, 0);
+        if (full >= 1500){
+            $("#Holiday").show()
+            $("#NHoliday").hide()
+        } else {
+            $("#Holiday").hide()
+            $("#NHoliday").show()
+        }
+        
+        if(document.querySelectorAll('.cart-total-label strong')[1].innerText.includes("WTFREE")){
+                document.querySelector('#WTfree').style.display = 'block'
+                $("#Holiday").hide()
+                $("#NHoliday").hide()
+            } else {
+                try { document.querySelector('#WTfree').style.display = 'none'}  catch(err) { }
+            }
+        document.querySelectorAll('.cart-total-label strong')[1].addEventListener("change", function() {
+            if(document.querySelectorAll('.cart-total-label strong')[1].innerText.includes("WTFREE")){
+                document.querySelector('#WTfree').style.display = 'block'
+                $("#Holiday").hide()
+                $("#NHoliday").hide()
+            } else {
+                try { document.querySelector('#WTfree').style.display = 'none'}  catch(err) { }
+            }
+        });
+        
+    });
+    
+    
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+$('.form-input.form-input--incrementTotal').attr("readonly", "readonly");
+	$('.button--icon.up').click(function(e){	
+		e.preventDefault();
+		var motm = parseInt($(this).closest('.form-increment').find('.form-input--incrementTotal').attr('data-quantity-motm'));	
+		if(motm<=0 || motm==null || isNaN(motm))
+			motm=1;
+		motm = motm - 1;
+		var getMin = parseInt($(this).closest('.form-increment').find('.form-input--incrementTotal').attr('data-quantity-min'));
+		var getInput = $(this).closest('.form-increment').find('.form-input--incrementTotal');
+		var currentVal = parseInt(getInput.val());
+		if (!isNaN(currentVal)) {
+			getInput.val(currentVal + motm);
+		} else {
+			getInput.val(getMin);
+		}
+		
+	});
+	$(".button--icon.down").click(function(e) {		
+		e.preventDefault();
+		var getMin = parseInt($(this).closest('.form-increment').find('.form-input--incrementTotal').attr('data-quantity-min'));
+		var motm = parseInt($(this).closest('.form-increment').find('.form-input--incrementTotal').attr('data-quantity-motm'));	
+		motm = motm;
+		
+		if(motm<=0 || motm==null || isNaN(motm))
+			motm=1;
+		var getInput = $(this).closest('.form-increment').find('.form-input--incrementTotal');
+		var currentVal = parseInt(getInput.val());
+       
+		if (!isNaN(currentVal)) {
+            var newQty = (currentVal - motm)+1;
+			getInput.val(newQty);
+		} else {
+			getInput.val(getMin);
+		}
+	});	
+});
+</script>

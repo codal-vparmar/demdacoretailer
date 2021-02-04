@@ -1,1 +1,9 @@
-.autogit
+/node_modules
+/webpack.dev.js
+/webpack.prod.js
+/webpack.common.js
+/stencil.conf.jss
+/parsed
+/config.json
+/.autogit
+/assets/dist/report.html

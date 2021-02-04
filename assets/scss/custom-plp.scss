@@ -1820,3 +1820,44 @@ div#ui-datepicker-div {
 .CTA-action {
     width: 40%; float: right; height: 100%; position: relative;
 } 
+
+    
+	.user-is-tabbing *:focus {
+		/* border: solid 2px #687782 !important; */
+		border-radius: 2px;
+		box-sizing: border-box;
+		box-shadow:  0px 0px 2px 2px, 0px 0px 2px 1px #687782;			
+	}	
+/* 	
+	@media only screen and (min-width: 1280px){
+		.navPages ul li:focus > div.navPage-subMenu > ul {
+			display: block;
+			opacity: 1;
+		}
+	}	
+ */
+	.user-is-tabbing a[href="#mainContent"]:focus {
+		clip: unset !important;
+		height: auto !important;
+		overflow: unset !important;
+		position: absolute !important;
+		width: auto !important;
+		padding: 10px 20px!important;
+		margin: 10px 10px !important;
+		background-color: white !important;
+		border: solid #555 2px !important;
+		z-index: 999999;
+	}
+
+    .user-is-tabbing a[href="#footerContent"]:focus {
+		clip: unset !important;
+		height: auto !important;
+		overflow: unset !important;
+		position: absolute !important;
+		width: auto !important;
+		padding: 10px 20px!important;
+		margin: 10px 10px !important;
+		background-color: white !important;
+		border: solid #555 2px !important;
+		z-index: 999999;
+	}

@@ -2395,3 +2395,8 @@ background-color:#555555;
 .single_wide h2, .single_wide p {
   color: #4D4F56 !important;
 }
+.user-is-tabbing :focus {
+    border-radius: 2px;
+    box-sizing: border-box;
+    box-shadow: 0 0 2px 2px, 0 0 2px 1px #687782;
+}

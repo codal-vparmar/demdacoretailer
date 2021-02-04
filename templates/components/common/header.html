@@ -1,0 +1,16 @@
+{{#if customer}}
+   <div class="banners bsh"> 
+    <p><span class="block block"></span></p> </div>
+{{else}}
+<div class="banners bsh"> 
+    <p><span class="block block"><b>Welcome!</b> First time logging in to our new retailer website? Existing retailers will need to <span style="text-decoration: underline;"><a href="/login.php?action=reset_password">reset their password</a></span>. <span class="block1">If you never had an online account, you can <span style="text-decoration: underline;"><a href="/register-online-account/">set one up now</a> </span>.</span></span></p> </div>
+{{/if}}
+<header class="header" role="banner">
+  <div class="inner-header"> <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu"> <span class="mobileMenu-toggleIcon">Toggle menu</span> </a>
+    <div class="navPages-container mobile-menu" id="menu" data-menu> {{> components/common/navigation-menu-mobile-static}} </div>
+    <div class="navPages-container head-left"> {{> components/common/navigation-menu-static}} </div>
+    <div class="header-logo header-logo-image header-logo--{{theme_settings.logo-position}}"> {{> components/common/store-logo}} </div>
+    <div class="head-right"> {{> components/common/navigation}} </div>
+  </div>
+</header>
+{{{region name="header_bottom"}}} 
