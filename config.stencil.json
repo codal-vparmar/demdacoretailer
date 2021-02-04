@@ -1,10 +1,10 @@
 {
-  "normalStoreUrl": "https://www.demdacoretailers.com/",
-  "port": "3000",
   "customLayouts": {
     "brand": {},
     "category": {},
     "page": {},
     "product": {}
-  }
+  },
+  "normalStoreUrl": "https://www.demdacoretailers.com/",
+  "port": "3000"
 }
